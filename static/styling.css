@@ -691,3 +691,7 @@ button.CancelPostBtn {
     height: 40px;
     font-size: 30px;
 }
+
+img {
+    margin-bottom: 50px;
+}
