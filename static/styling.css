@@ -426,6 +426,10 @@ td {
     padding-right: 5px;
 }
 
+tr {
+    margin-bottom: 50px;
+}
+
 td.MultiSelect {
     width: 150px;
 }
