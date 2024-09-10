@@ -477,27 +477,6 @@ table#SemesterSchedule tr:nth-child(even) {
 }
 
 
-a {
-    margin-left: 25px;
-    margin-right: 25px;
-    font-size: 20px;
-    color: rgb(220, 220, 220);
-}
-
-a.ToDoLink {
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-a.UpdateLink {
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-a.CourseTitle {
-    font-size: inherit;
-    margin-right: 10px;
-}
 
 
 

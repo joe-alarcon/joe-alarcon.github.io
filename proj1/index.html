@@ -53,7 +53,7 @@
 
 <div class="HomeContainer">
 <h2> Overview </h2>
-<p> In this project, we took the digitized versions of Sergey Prokudin-Gorsky's triple exposure pictures of scenes from the Russian Empire and aligned them to create the colorized versions of these pictures, which you can find below. </p>
+<p> In this project, we took the digitized versions of Sergey Prokudin-Gorsky's triple exposure pictures of scenes from the Russian Empire and aligned them to create the colorized versions of these pictures, which you can find below. You can find more information about the project on the Library of Congress' page <a href="https://www.loc.gov/exhibits/empire/making.html">here</a>. </p>
 
 <h2> Methodology </h2>
 <p> We align the pictures by choosing one of the pictures as a "base" and aligning the other two pictures to this base picture. For all of the images, I picked green as the base and aligned red and blue to it. Then, for all of the calls to the single scale alignment function, I cropped the images by 20% on each side. This reduced computations and also allowed the alogirthm to align the photos better by focusing on the content of the photos instead of the borders and edge artifacts. For my metric, I used the sum of squares error on the difference between the base photo and the relative photo. Minimize this metric and return the best alignment offsets. The methodology is further exaplined under each of the following sections. </p>
