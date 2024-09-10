@@ -55,7 +55,7 @@
 <p> In this project, we took the digitized versions of Sergey Prokudin-Gorsky's triple exposure pictures of scenes from the Russian Empire and aligned them to create the colorized versions of these pictures, which you can find below. </p>
 
 <h2> Methodology </h2>
-<p> We align the pictures by choosing one of the pictures as a "base" and aligning the other two pictures to this base picture. For all of the images, I picked green as the base and aligned red and blue to it. Then, for all of the calls to the single scale alignment function, I cropped the images by 20% on each side. This reduced computations and also allowed the alogirthm to align the photos better by focusing on the content of the photos instead of the borders and edge artifacts. For my metric, I used the sum of squares error on the difference between the base photo and the relative photo. Minimize this metric and return the best alignment offsets. </p>
+<p> We align the pictures by choosing one of the pictures as a "base" and aligning the other two pictures to this base picture. For all of the images, I picked green as the base and aligned red and blue to it. Then, for all of the calls to the single scale alignment function, I cropped the images by 20% on each side. This reduced computations and also allowed the alogirthm to align the photos better by focusing on the content of the photos instead of the borders and edge artifacts. For my metric, I used the sum of squares error on the difference between the base photo and the relative photo. Minimize this metric and return the best alignment offsets. The methodology is further exaplined under each of the following sections. </p>
 
 <h2>Low-Res Images</h2>
 <p> Single Scale alignment. These pictures only required one call to the alignment function to be aligned perfectly. My implementation searched over a grid area of \( [-15,15] \) by \( [-15,15] \) pixel grid to align the pictures. </p>
@@ -73,9 +73,9 @@
 </table>
 
 <h2>High-Res Images</h2>
-<p> Multiscale alignment with an image pyramid using Gaussian blurring and sampling to build the pyramid. 
-  
-First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Then, I sampled the images up to some factor \( \frac{1}{2^i} )\ where \( i \) ranges from \( \log_2(w) - \mathrm{level_factor} \) to 1, where \(w\) is the width. The level_factor parameter prevents from having an image with too little pixels, and a value that worked well for me is 5. Starting from the smallest pictures, my implementation blurs and scales (sample) them, then aligns the images with a \( [-15+j,15-j] \) by \( [-15+j,15-j] \) pixel search grid like before, where \(j\) is the iteration number. Once I got the alignment offsets, the algorithm multiplies them by \( 2^i \) to return to the normal scale. Then, I aligned the relative image to the fixed image using these offsets and repeated the iteration with the next larger image. </p>
+<p> Multiscale alignment with an image pyramid using Gaussian blurring and sampling to build the pyramid. </p>
+<p> First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Then, I sampled the images up to some factor \( \frac{1}{2^i} \) where \( i \) ranges from \( \log_2(w) - \mathrm{level factor} \) to 1, where \(w\) is the width. The level factor parameter prevents from having an image with too little pixels, and a value that worked well for me is 5. Starting from the smallest pictures, my implementation blurs and scales (sample) them, then aligns the images with a \( [-15+j,15-j] \) by \( [-15+j,15-j] \) pixel search grid like before, where \(j\) is the iteration number. Once I got the alignment offsets, the algorithm multiplies them by \( 2^i \) to return to the normal scale. Then, I aligned the relative image to the fixed image using these offsets and repeated the iteration with the next larger image. </p>
+
 <table>
   <tr>
     <th> Church </th>
@@ -83,9 +83,9 @@ First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Th
     <th> Harversters </th>
   </tr>
   <tr>
-    <td> <img src="images/out_church.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_emir.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_harvesters.jpg" width="400" height="300"> </td>
+    <td> <img src="images/out_church.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_emir.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_harvesters.jpg" width="500" height="300"> </td>
   </tr>
   <tr>
     <th> Icon </th>
@@ -93,9 +93,9 @@ First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Th
     <th> Melons </th>
   </tr>
   <tr>
-    <td> <img src="images/out_icon.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_lady.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_melons.jpg" width="400" height="300"> </td>
+    <td> <img src="images/out_icon.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_lady.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_melons.jpg" width="500" height="300"> </td>
   </tr>
   <tr>
     <th> Onion Church </th>
@@ -103,21 +103,22 @@ First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Th
     <th> Self Portrait </th>
   </tr>
   <tr>
-    <td> <img src="images/out_onion_church.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_sculpture.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_self_portrait.jpg" width="400" height="300"> </td>
+    <td> <img src="images/out_onion_church.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_sculpture.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_self_portrait.jpg" width="500" height="300"> </td>
   </tr>
   <tr>
     <th> Three Generations </th>
     <th> Train </th>
   </tr>
   <tr>
-    <td> <img src="images/out_three_generations.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_train.jpg" width="400" height="300"> </td>
+    <td> <img src="images/out_three_generations.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_train.jpg" width="500" height="300"> </td>
   </tr>
 </table>
 
-<h2> High-Res Images that I chose </h2>
+<h2> Custom Images </h2>
+<p> Also high resolution images which used the multiscale alignment algorithm as described above. </p>
 <table>
   <tr>
     <th> Boy </th>
@@ -125,12 +126,13 @@ First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Th
     <th> Railroad Men </th>
   </tr>
   <tr>
-    <td> <img src="images/out_boy.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_bible.jpg" width="400" height="300"> </td>
-    <td> <img src="images/out_railroad_men.jpg" width="400" height="300"> </td>
+    <td> <img src="images/out_boy.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_bible.jpg" width="500" height="300"> </td>
+    <td> <img src="images/out_railroad_men.jpg" width="500" height="300"> </td>
   </tr>
 </table>
-
+<p> Finally, one custom low resolution image. Chalice. </p>
+<img src="images/out_chalice.jpg" width="400" height="300">
 
 <h2> Displacements </h2>
 <table>
@@ -200,7 +202,7 @@ First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Th
   <tr>
     <td></td>
     <td></td>
-    <th> My images </th>
+    <th> Custom images </th>
     <td></td>
     <td></td>
   </tr>
@@ -212,6 +214,9 @@ First I blurred the images with a Gaussian 3 by 3 filter to prevent aliasing. Th
   </tr>
   <tr>
     <td> railroad_men.tif </td> <td> -34 </td> <td> 14 </td> <td> 87 </td> <td> -12 </td>
+  </tr>
+  <tr>
+    <td> chalice.jpg </td> <td> -6 </td> <td> -1 </td> <td> 7 </td> <td> 0 </td>
   </tr>
 </table>
 
