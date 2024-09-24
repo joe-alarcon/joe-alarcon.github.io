@@ -50,7 +50,7 @@
 <h1>Project 2</h1>
 <div class="HomeContainer">
 <h2> Overview </h2>
-
+For this project, we experiment with low-pass and high-pass filtering to sharpen blurry images and to also display hybrid images which appear differently when viewed close or at a distance. Further, we use Gaussian and Laplacian stacks, which contain different levels each of which encodes information about the frequencies that make up an image. Then, we can apply a mask at each level to integrate two images together seamlessly.
 </div>
 
 <h1> Filters </h1>
@@ -87,7 +87,7 @@
 
 <div class="HomeContainer">
 <h2> Derivative of Gaussian (DoG) Filter </h2>
-<p> Blur the image with a low-pass filter, a Gaussian kernel, and then compute the derivatives of the image. </p>
+<p> Blur the image with a low-pass filter, a Gaussian kernel, and then compute the derivatives of the image. The results below are clearly much better than those above due to the low-pass filter removing noise in the images which the filters above picked up as "edges". By smoothing, we ignore these fake edges but still preserve the original edges. </p>
 <table>
   <tr>
     <th> Derivative wrt to x-axis </th>
@@ -115,7 +115,7 @@
   </tr>
 </table>
 
-<p> Make a single filter, the derivative of the Gaussian kernel, and then convolve with the image. </p>
+<p> Make a single filter, by taking the derivative of the Gaussian kernel which is the convolution of the kernel with each difference operator, and then convolve with the image. </p>
 <table>
   <tr>
     <th> Derivative wrt to x-axis </th>
@@ -187,6 +187,8 @@
   <tr>
     <td> <img src="images/data/chichen_itza.jpg" width="400" height="400"> </td>
   </tr>
+  </table>
+  <table>
   <tr>
     <th> Blurred Original </th>
     <th> Sharpened </th>
@@ -211,9 +213,9 @@
     <th> Season 5 Episode 8 </th>
   </tr>
   <tr>
-    <td> <img src="images/data/happyhank.png" width="400" height="400"> </td>
-    <td> <img src="images/data/angryhank.png" width="400" height="400"> </td>
-    <td> <img src="images/processed/out_hangryhank.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/happyhank.png" width="300" height="300"> </td>
+    <td> <img src="images/data/angryhank.png" width="300" height="300"> </td>
+    <td> <img src="images/processed/out_hangryhank.jpg" width="300" height="300"> </td>
   </tr>
   </table>
   <p> The images with Hank made for the best result. Below are the frequency domain images. Note that the original two images have very similar frequency representation because they are very similar in the spatial domain. </p>
@@ -252,9 +254,9 @@
     <th> F1 World Champions </th>
   </tr>
   <tr>
-    <td> <img src="images/data/f1.jpg" width="400" height="200"> </td>
-    <td> <img src="images/data/ferrari.jpg" width="400" height="200"> </td>
-    <td> <img src="images/processed/out_f1ferrari.jpg" width="400" height="200"> </td>
+    <td> <img src="images/data/f1.jpg" width="300" height="150"> </td>
+    <td> <img src="images/data/ferrari.jpg" width="300" height="150"> </td>
+    <td> <img src="images/processed/out_f1ferrari.jpg" width="300" height="150"> </td>
   </tr>
   <tr>
     <th> Happy </th>
@@ -262,9 +264,9 @@
     <th> Saddy? </th>
   </tr>
   <tr>
-    <td> <img src="images/data/happy.jpg" width="400" height="400"> </td>
-    <td> <img src="images/data/sad.jpg" width="400" height="400"> </td>
-    <td> <img src="images/processed/out_sappy.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/happy.jpg" width="300" height="300"> </td>
+    <td> <img src="images/data/sad.jpg" width="300" height="300"> </td>
+    <td> <img src="images/processed/out_sappy.jpg" width="300" height="300"> </td>
   </tr>
   <tr>
     <th> Me </th>
@@ -272,9 +274,9 @@
     <th> Joe in the 501st (Failure) </th>
   </tr>
   <tr>
-    <td> <img src="images/data/me.jpg" width="400" height="400"> </td>
-    <td> <img src="images/data/trooper.jpg" width="400" height="400"> </td>
-    <td> <img src="images/processed/out_joe_501.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/me.jpg" width="300" height="300"> </td>
+    <td> <img src="images/data/trooper.jpg" width="300" height="300"> </td>
+    <td> <img src="images/processed/out_joe_501.jpg" width="300" height="300"> </td>
   </tr>
 </table>
 </div>
@@ -300,11 +302,17 @@
   <tr>
     <th> Boeing 777 </th>
     <th> Airbus 350 </th>
-    <th> Boeing 350 </th>
   </tr>
   <tr>
     <td> <img src="images/data/b777.jpg" width="400" height="400"> </td>
     <td> <img src="images/data/a350.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Mask </th>
+    <th> Boeing 350 </th>
+  </tr>
+  <tr>
+    <td> <p> The mask used for this image is a simple left-half plane, similar to the one shown in the orapple stack. </p> </td>
     <td> <img src="images/processed/out_boeing350.jpg" width="400" height="400"> </td>
   </tr>
   </table>
@@ -326,7 +334,10 @@
     <td> <img src="images/data/ahsoka_mask.jpg" width="400" height="400"> </td>
     <td> <img src="images/processed/out_irl_ahsoka.jpg" width="400" height="400"> </td>
   </tr>
+  </table>
   <!-- Picture 3 -->
+   <p> Below, note that the mask image is taken directly from the source image. However, my implementation increases the size of the mask image so that it's identical to the size of the larger image of the Bay Area.  </p>
+  <table>
   <tr>
     <th> Bay Area </th>
     <th> Star Destroyer </th>
