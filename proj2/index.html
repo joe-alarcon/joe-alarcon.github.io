@@ -48,6 +48,240 @@
 <body>
 
 <h1>Project 2</h1>
+<div class="HomeContainer">
+<h2> Overview </h2>
+
+</div>
+
+<h1> Filters </h1>
+<div class="HomeContainer">
+<h2> Finite Difference Operator </h2>
+<p> Using the finite difference operators, convolve the image with each derivative filter to obtain the partial derivatives with respect to x and y. Then, the gradient is simply the vector whose first component is the partial derivative along x and second component is the partial derivative along y. Of couse, we cannot plot this as an image, so we take its magnitude (Euclidean norm) and make an image. The magnitude gradient image has the edges of the original image. </p>
+<table>
+  <tr>
+    <th> Derivative wrt to x-axis </th>
+    <th> Binarized partial derivative </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_1/dx.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_1/dx_bin.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Derivative wrt to y-axis </th>
+    <th> Binarized partial derivative </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_1/dy.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_1/dy_bin.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Gradient </th>
+    <th> Binarized Gradient </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_1/grad.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_1/grad_bin.jpg" width="400" height="400"> </td>
+  </tr>
+</table>
+</div>
+
+<div class="HomeContainer">
+<h2> Derivative of Gaussian (DoG) Filter </h2>
+<p> Blur the image with a low-pass filter, a Gaussian kernel, and then compute the derivatives of the image. </p>
+<table>
+  <tr>
+    <th> Derivative wrt to x-axis </th>
+    <th> Binarized partial derivative </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_2/dx.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_2/dx_bin.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Derivative wrt to y-axis </th>
+    <th> Binarized partial derivative </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_2/dy.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_2/dy_bin.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Gradient </th>
+    <th> Binarized Gradient </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_2/grad.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_2/grad_bin.jpg" width="400" height="400"> </td>
+  </tr>
+</table>
+
+<p> Make a single filter, the derivative of the Gaussian kernel, and then convolve with the image. </p>
+<table>
+  <tr>
+    <th> Derivative wrt to x-axis </th>
+    <th> Binarized partial derivative </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_3/dx.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_3/dx_bin.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Derivative wrt to y-axis </th>
+    <th> Binarized partial derivative </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_3/dy.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_3/dy_bin.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Gradient </th>
+    <th> Binarized Gradient </th>
+  </tr>
+  <tr>
+    <td> <img src="images/processed/out_cameraman_3/grad.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_cameraman_3/grad_bin.jpg" width="400" height="400"> </td>
+  </tr>
+</table>
+
+
+<p> Compare the second and third images. They're almost identical. </p>
+<table>
+<tr>
+  <th> Binarized Gradient, low-pass then derivatives </th>
+  <th> Binarized Gradient, derivative of low-pass </th>
+</tr>
+<tr>
+  <td> <img src="images/processed/out_cameraman_2/grad_bin.jpg" width="400" height="400"> </td>
+  <td> <img src="images/processed/out_cameraman_3/grad_bin.jpg" width="400" height="400"> </td>
+</tr>
+</table>
+</div>
+
+
+
+<h1> Frequencies </h1>
+
+<div class="HomeContainer">
+<h2> Image "Sharpening" </h2>
+
+<table>
+  <tr>
+    <th> Taj Mahal </th>
+    <th> Sharpened </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/taj.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_taj.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Landscape </th>
+    <th> Sharpened </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/landscape.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_landscape.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Chichen Itza </th>
+    <th> Blurred Original </th>
+    <th> Sharpened </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/chichen_itza.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/blurred_chichen_itza.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_chichen_itza.jpg" width="400" height="400"> </td>
+  </tr>
+</table>
+</div>
+
+<div class="HomeContainer">
+<h2> Hybrid Images </h2>
+
+<table>
+  <tr>
+    <th> Happy Hank </th>
+    <th> Angry Hank </th>
+    <th> Season 5 Episode 8 </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/happyhank.png" width="400" height="400"> </td>
+    <td> <img src="images/data/angryhank.png" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_hangryhank.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> McLaren F1 </th>
+    <th> La Ferrari </th>
+    <th> F1 World Champions </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/f1.png" width="400" height="400"> </td>
+    <td> <img src="images/data/ferrari.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_f1ferrari.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Happy </th>
+    <th> Sad </th>
+    <th> Saddy? </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/happy.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/sad.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_sappy.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Me </th>
+    <th> Rex </th>
+    <th> Joe in the 501st (Failure) </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/me.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/trooper.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_joe_501.jpg" width="400" height="400"> </td>
+  </tr>
+</table>
+</div>
+
+<div class="HomeContainer">
+<h2> Gaussian and Laplacian Stacks </h2>
+<img src="images/processed/out_orapple_stack.jpg" width="400" height="400">
+<img src="images/processed/out_orapple.jpg" width="400" height="400">
+</div>
+
+<div class="HomeContainer">
+<h2> Multiresolution Blending </h2>
+<table>
+  <tr>
+    <th> Boeing 777 </th>
+    <th> Airbus 350 </th>
+    <th> Boeing 350 </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/b777.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/a350.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_boeing350.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> IRL couch </th>
+    <th> Lego Ahsoka </th>
+    <th> Lego Ahsoka IRL </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/seat.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/ahsoka.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_sappy.jpg" width="400" height="400"> </td>
+  </tr>
+  <tr>
+    <th> Bay Area </th>
+    <th> Star Destroyer </th>
+    <th> Long Live the Empire </th>
+  </tr>
+  <tr>
+    <td> <img src="images/data/berkeley_sky.jpg" width="400" height="400"> </td>
+    <td> <img src="images/data/stardestroyer.jpg" width="400" height="400"> </td>
+    <td> <img src="images/processed/out_stardestroyer_sky.jpg" width="400" height="400"> </td>
+  </tr>
+</table>
+</div>
 
 </body>
 </html>
