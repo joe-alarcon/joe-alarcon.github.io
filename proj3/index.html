@@ -48,6 +48,128 @@
 <body>
 
 <h1>Project 3</h1>
+<div class="HomeContainer">
+  <h2>Overview</h2>
+  For this project, we implemented a morphing function that allows us to morph faces. 
+</div>
+
+<div class="HomeContainer">
+  <h2>Defining Correspondences</h2>
+  <h3>Approach</h3>
+  <p>Using this <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html">very helpful tool</a> developed be a previous CS 180 student, it is possible to easily choose points on the two images that correspond to each other. Using these points, perform a Delaunay triangulation to be able to map the points to each other. For instructive purposes, I have also performed the triangulation on the original images. However, the important triangulation is the mid-way triangulation because we want to map each picture to this midpoint in order to make the morph more seamless. </p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>Correspondences</th>
+      <th>Triangulation</th>
+    </tr>
+    <tr>
+      <td> <img src="images/data/joe_clooney_correspondences.jpg" width="400" height="400"> </td>
+      <td> <img src="images/processed/george_me_traingulation.jpg" width="400" height="400"> </td>
+    </tr>
+    <tr>
+      <td> <img src="images/data/joe_gosling_correspondences.jpg" width="400" height="400"> </td>
+      <td> <img src="images/processed/ryan_medium_me_medium_traingulation.jpg" width="400" height="400"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>Computing the “Mid-way Face"</h2>
+  <h3>Approach</h3>
+  <p></p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>Me</th>
+      <th>Mid-Way Face</th>
+      <th>Celebrity</th>
+    </tr>
+    <tr>
+      <td> <img src="images/data/me.jpg" width="300" height="300"> </td>
+      <td> <img src="images/processed/joe_clooney.jpg" width="300" height="300"> </td>
+      <td> <img src="images/data/george.jpg" width="300" height="300"> </td>
+    </tr>
+    <tr>
+      <td> <img src="images/data/me_medium.jpg" width="300" height="300"> </td>
+      <td> <img src="images/processed/joe_gosling.jpg" width="300" height="300"> </td>
+      <td> <img src="images/data/ryan_medium.jpg" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>The Morph Sequence</h2>
+  <h3>Approach</h3>
+  <p></p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>Joe Clooney</th>
+      <th>Joe Gosling</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/joe_clooney.gif" width="400" height="400"> </td>
+      <td> <img src="images/processed/joe_gosling.gif" width="400" height="400"> 
+        <p> Literally Me </p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>The “Mean face" of a population</h2>
+  <h3>Approach</h3>
+  <p></p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>Average Face</th>
+      <th>Me with Average Shape</th>
+      <th>Average Face with My Shape</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/brazil_avg.jpg" width="250" height="300"> </td>
+      <td> <img src="images/processed/joe_from_brazil.jpg" width="250" height="300"> </td>
+      <td> tbd </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Original Face</th>
+      <th>Face morphed to Average Shape</th>
+    </tr>
+    <tr>
+      <td> <img src="images/data/brazil/1a.jpg" width="400" height="400"> </td>
+      <td> <img src="images/processed/brazil_morph_0.jpg" width="400" height="400"> </td>
+    </tr>
+    <tr>
+      <td> <img src="images/data/brazil/1a.jpg" width="400" height="400"> </td>
+      <td> <img src="images/processed/brazil_morph_1.jpg" width="400" height="400"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>Caricatures: Extrapolating from the mean</h2>
+  <h3>Approach</h3>
+  <p></p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>Caricature</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/joe_from_brazil_caricature.jpg" width="400" height="400"> </td>
+    </tr>
+  </table>
+</div>
 
 </body>
 </html>
