@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>CS 180 Project 3</title>
     <link rel="stylesheet" type="text/css" href="/static/styling.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <header>
@@ -50,13 +52,13 @@
 <h1>Project 3</h1>
 <div class="HomeContainer">
   <h2>Overview</h2>
-  For this project, we implemented a morphing function that allows us to morph faces. 
+  <h3 style="text-align: center;">For this project, we implemented a morphing function that allows us to morph faces.</h3>
 </div>
 
 <div class="HomeContainer">
   <h2>Defining Correspondences</h2>
   <h3>Approach</h3>
-  <p>Using this <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html">very helpful tool</a> developed be a previous CS 180 student, it is possible to easily choose points on the two images that correspond to each other. Using these points, perform a Delaunay triangulation to be able to map the points to each other. For instructive purposes, I have also performed the triangulation on the original images. However, the important triangulation is the mid-way triangulation because we want to map each picture to this midpoint in order to make the morph more seamless. </p>
+  <p>Using this <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html">very helpful tool</a> developed by a previous CS 180 student, it is possible to easily choose points on the two images that correspond to each other. Using these points, perform a Delaunay triangulation to be able to map the points to each other. For instructive purposes, I have also performed the triangulation on the original images. However, the important triangulation is the mid-way triangulation because we want to map each picture to this midpoint in order to make the morph more seamless. </p>
 
   <h3>Results</h3>
   <table>
@@ -180,7 +182,7 @@
 <div class="HomeContainer">
   <h2>Bells and Whistles</h2>
   <h3>Morphing with my Friends</h3>
-  <p>This is essentially the same as "The morph sequence" section but we chain multiple morphs into a single continuous morph. I did this by making the images the same size and making the correspondence selections for each pair of images. Credit to Austin Zhu, Rebecca Feng, and Samyak Tiwari.</p>
+  <p>This is essentially the same as "The morph sequence" section but we chain multiple morphs into a single continuous morph. I did this by making the images the same size and making the correspondence selections for each pair of images. Credit to <a href="https://austin0707.github.io/index.html">Austin Zhu</a>, <a href="https://beckyfeng08.github.io/index.html">Rebecca Feng</a>, and Samyak Tiwari.</p>
 
   <h3>Results</h3>
   <table>
