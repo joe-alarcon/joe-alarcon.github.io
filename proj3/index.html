@@ -108,11 +108,11 @@
 <div class="HomeContainer">
   <h2>The Morph Sequence</h2>
   <h3>Approach</h3>
-  <p>This section uses the code and calculations from the previous parts. However, in this section, we also want to compute other intermediate shapes and not just the average shape. Therefore, we specify a warp factor which determines the linear comvination of the two shapes of the images. However, note that we always use the triangulation computed from the average shape because we want all of the intermediate warps to have the same mappings, which requires the same triangulation. If we repeat this for multiple values of the warp factor and the cross dissolve factor (for values between 0 and 1) and concatenate the results, we get gifs below. </p>
-  <p> For the second gif, I also reflected the sequence to make the looping look nicer.</p>
+  <p>This section uses the code and calculations from the previous parts. However, in this section, we also want to compute other intermediate shapes and not just the average shape. Therefore, we specify a warp factor which determines the linear combination of the two shapes of the images. However, note that we always use the triangulation computed from the average shape because we want all of the intermediate warps to have the same mappings, which requires the same triangulation. If we repeat this for multiple values of the warp factor and the cross dissolve factor (for values between 0 and 1) and concatenate the results, we get the gifs below. </p>
+  <p>For the second gif, I also reflected the sequence to make the looping look nicer.</p>
+  <p>Note: my code didn't loop the gifs automatically so I ran "brew install imagemagick" and "convert -delay 5 -loop 0 noloop.gif loop.gif".</p>
 
   <h3>Results</h3>
-  <p>Note that the GIFs are pretty large in size which is why I suspect they don't render too well on the website. Moreover, my code didn't loop the gifs automatically so I ran "brew install imagemagick" and "convert -delay 5 -loop 0 noloop.gif loop.gif".</p>
   <table>
     <tr>
       <th>Joe Clooney</th>
