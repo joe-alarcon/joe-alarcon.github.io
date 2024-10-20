@@ -49,5 +49,190 @@
 
 <h1>Project 4</h1>
 
+<div class="HomeContainer">
+  <h2>Overview</h2>
+  <h3 style="text-align: center;">For this project, we implemented a more generalized morphing/warping function that allows us to rectify images and to stitch together images into mosaics.</h3>
+</div>
+
+<h1>Project 4A</h1>
+
+<div class="HomeContainer">
+  <h2>Taking Pictures</h2>
+  <h3>Approach</h3>
+  <p>Went around the Bay to take some picture.</p>
+
+  <h3>Results</h3>
+  <h4>Pictures for Rectification</h4>
+  <table>
+    <tr>
+      <td> <img src="images/data/posters/andor.jpg" width="450" height="400"> </td>
+      <td> <img src="images/data/posters/180blackboard.jpg" width="450" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>SF Skyline</h4>
+  <table>
+    <tr>
+      <td> <img src="images/data/sf/im1.jpg" width="450" height="400"> </td>
+      <td> <img src="images/data/sf/im2.jpg" width="450" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>Bay Area Sunset</h4>
+  <table>
+    <tr>
+      <td> <img src="images/data/bay_sunset/im1.jpg" width="450" height="400"> </td>
+      <td> <img src="images/data/bay_sunset/im2.jpg" width="450" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>Bay Area Nighttime</h4>
+  <table>
+    <tr>
+      <td> <img src="images/data/bay_night/im1.jpg" width="450" height="400"> </td>
+      <td> <img src="images/data/bay_night/im2.jpg" width="450" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>United B777 - Bay Fleet Week</h4>
+  <table>
+    <tr>
+      <td> <img src="images/data/b777/im1.jpg" width="450" height="400"> </td>
+      <td> <img src="images/data/b777/im2.jpg" width="450" height="400"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>Recovering Homographies</h2>
+  <h3>Approach</h3>
+  <p> The mathematics behind the image warping that is done in this project can be described with a linear transformation called a Homography or a perspective transform. The idea is that there exists a matrix which can project the pixels of an image onto the plane of perspective of another image. This allows us to see an image from a different perspective without having to retake the image. </p>
+  
+  <p> The Homography matrix is defined as:
+    \[ \begin{bmatrix}
+    a & b & c \\
+    d & e & f \\
+    g & h & 1
+    \end{bmatrix}
+    \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+    =
+    \begin{bmatrix} wx' \\ wy' \\ w \end{bmatrix} \]
+    Namely, is is first necessary to convert the pixel indices/coordiantes into the Barycentric coordiantes by extending them to the third dimension and appending a one as the third entry. Then, if we map a pixel through \(H\), we get the corresponding pixels's indices/coordinates in the projected plane, weighted by some constant. If we divide through by the third entry and keep only the first two, we obtain the projected coordinates. </p>
+    
+    <p> In this case, we don't know \(H\) but we do know the pixel values. This means that we can apply Least Squares to obtain the unknown coefficients in \(H\). This can be formulated as follows:
+    \[ \begin{align*}
+    &\begin{cases}
+    ax + by + c = wx' \\
+    dx + ey + f = wy' \\
+    gx + hy + 1 = w
+    \end{cases}
+    \\
+    \implies
+    &\begin{cases}
+    ax + by + c = (gx + hy + 1) x' \\
+    dx + ey + f = (gx + hy + 1) y'
+    \end{cases}
+    \\
+    \implies
+    &\begin{cases}
+    ax + by + c - gxx' - hyx' = x' \\
+    dx + ey + f - gxy' - hyy' = y'
+    \end{cases}
+    \\
+    \implies
+    &\begin{bmatrix}
+    x & y & 1 & 0 & 0 & 0 & -xx' & -yx' \\
+    0 & 0 & 0 & x & y & 1 & -xy' & -yy' \\
+    \end{bmatrix}
+    \begin{bmatrix} a \\ b \\ c \\ d \\ e \\ f \\ g \\ h \end{bmatrix}
+    =
+    \begin{bmatrix} x' \\ y' \end{bmatrix}
+    \end{align*} \] 
+    If we repeat this process for three other pixels, we will have the necessary eight equations to solve for the eight unknowns of \(H\). Thus, we need to <b>choose</b> which pixels should define our Homography. This can be done by choosing specific features on the image that will be warped/projected and matching them to desired projected pixels. This part also uses this <a href="https://cal-cs180.github.io/fa23/hw/proj3/tool.html">very useful website</a> again to choose these correspondence points. 
+  </p>
+  
+</div>
+
+<div class="HomeContainer">
+  <h2>Warping Images</h2>
+  <h3>Approach</h3>
+  <p>Once we have computed \(H\) for an image, we need to warp/project all of the pixels of that image onto the desired plane. We do this by following a very similar procedure to the one done in the <a href="/proj3/index.html">previous project</a>. However, it is not necessary to perform any triangulation for this project. Here is an overview of the procedure that I implemented:</p>
+  <ol>
+    <li> Map the corners of the original image through \(H\). These new pixels are the corners of the warped image. </li>
+    <li> These projected corners might have negative values, so I create a second copy of the warped corners and align them such that the smallest entry in this list is zero. These are the shifted corners. </li>
+    <li> Find the shape of the warped image using the warped corners: max(warped corners) - min(warped corners). Then, place the shifted corners into the skimage.draw.polygon function to get the region that our image will be projected onto. </li>
+    <li> Remove the shift introduced in the region and perform inverse warping by mapping the entire region calculated above through \(H^{-1}\). It's necessary to remove the shift, otherwise, we don't map back to the original image correctly. </li>
+    <li> Now that we have the pixels we want to sample at in the original image, perform interpolation using scipy.interpolate.griddata to get the value at those pixels for each color channel. </li>
+    <li> Put everything together and place the warped image into an empty array by indexing at the polygon region. </li>
+  </ol>
+  <p>The key in all of this is that you have to use the un-shifted version of the polygon region to obtain the corresponding sampling points in the original image. But use the shifted version of the polygon region to map into the new warped image.</p>
+</div>
+
+<div class="HomeContainer">
+  <h2>Rectified Images</h2>
+  <h3>Approach</h3>
+  <p>Using the selected correspondences, I warp the image into a rectangle in the middle of the projected image. I compute the Homography \(H\) using these correspondences and compute the warp as described above. This procedure yielded the following results. </p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>Andor Poster</th>
+      <th>CS180 Blackboard</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/posters/andor.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/posters/180blackboard.jpg" width="400" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>Mosaics</h2>
+  <h3>Approach</h3>
+  <p> In this part, we take two images. Keep one fixed and project the other onto the perspective plane of that image. Put the two images and blend them together to create a mosaic. Below is the procedure that I implemented: </p>
+  <ol>
+    <li> Project an image onto a fixed image using the procedures described above. </li>
+    <li> Find the size of the image buffer that will hold the two blended images.</li>
+    <li> Make two copies of an empty buffer with that size and place the warped and the fixed image in each. Also, add an alpha channel for the images: wherever a pixel in the image exists, set alpha to 1, and 0 otherwise. </li>
+    <li> Using the alpha channel, compute the shortest distance to an edge for all the pixels in both images using scipy.ndimage.distance_transform_edt. Then, if we compare the two arrays of distances, we can obtain a boolean array that can act as a mask for the next step. </li>
+    <li> To seamlessly blend the two images together, compute a Laplacian stack with 2 levels using the implementation from <a href="/proj2/index.html">project 2</a>. </li>
+  </ol>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <th>San Francisco Skyline</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/sf/mosaic.jpg" width="400" height="400"> </td>
+    </tr>
+    <tr>
+      <th>The Bay Sunset</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/bay_sunset/mosaic.jpg" width="400" height="400"> </td>
+    </tr>
+    <tr>
+      <th>The Bay Nighttime</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/bay_night/mosaic.jpg" width="400" height="400"> </td>
+    </tr>
+    <tr>
+      <th>Fleet Week (not the best)</th>
+    </tr>
+    <tr>
+      <td> <img src="images/processed/b777/mosaic.jpg" width="400" height="400"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>Bells and Whistles</h2>
+  None for this project.
+</div>
+
+<h1>Project 4B</h1>
+
 </body>
 </html>
