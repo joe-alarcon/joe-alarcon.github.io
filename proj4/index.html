@@ -246,7 +246,7 @@
   <h3>Approach</h3>
   <p>In this part, we want to find points of interest which we can use as features to automatically build the correspondences between images in a mosaic. These points of interest are called Harris corners. Using the provided starter code, the Harris corners along with their scores are calculated. Then, the ANMS algorithm allows us to suppress the vast majority of the Harris corners while maintaining a good distribution of them across the image. This is where we use the equation in the paper which introduced ANMS. The paper is titled “Multi-Image Matching using Multi-Scale Oriented Patches". 
   \[ r_i = \max_j |x_i - x_j| \,\,\, \text{ s.t. } \,\,\, h(x_i) &lt; c_{\text{robust}} h(x_j) \]
-  Compute this for all corners \(x_i\). Then, return a desired number of best corners (I chose to return the best 200), where a corner is best if its radius is large. This ensures that the Harris corners don't clump up and are distributed in the picture.
+  Compute this for all corners \(x_i\). Then, return a desired number of best corners (I chose to return the best 300 and I also set \(c_{\text{robust}} = 0.9\)), where a corner is best if its radius is large. This ensures that the Harris corners don't clump up and are distributed in the picture.
 
   </p>
 
@@ -382,7 +382,7 @@
       <li>Count how many mapped points are close enough to the original target points.</li>
       <li>Take the max over how many points are “inline" and return the subset of corners that maximizes this value. </li>
     </ol>
-    This subset of points are the correspondences that will be used to warp images. </p>
+    This subset of points are the correspondences that will be used to warp images. As a final note, I'm unsure of the exact reason why but RANSAC was a bit “finnicky" with the sunset and nighttime pictures. There seems to be one combination of points that achieves the max inline correspondences but whose homography scales the points way too much. Thus, I always reseeded at the beginning of each call to RANSAC. </p>
 
   <h3>Results</h3>
   <h4>SF Skyline</h4>
@@ -420,39 +420,43 @@
   <p> With these correspondence points, compute the mosaic as was done in Project 4A. </p>
 
   <h3>Results</h3>
-  <p>Note, the B777 mosaic is still not perfect because I moved the camera and the center or projection as well when taking the pictures. </p>
+  <p>Comparing the manual (left) and auto (right) correspondence points. Note, the B777 mosaic is much better now, compared to when I manually picked the correspondence points. </p>
 
   <table>
     <tr>
       <th>San Francisco Skyline</th>
     </tr>
     <tr>
-      <td> <img src="images/processed/sf/mosaic_auto.jpg" width="600" height="600"> </td>
+      <td> <img src="images/processed/sf/mosaic.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/sf/mosaic_auto.jpg" width="300" height="400"> </td>
     </tr>
     <tr>
       <th>The Bay Sunset</th>
     </tr>
     <tr>
-      <td> <img src="images/processed/bay_sunset/mosaic_auto.jpg" width="600" height="600"> </td>
+      <td> <img src="images/processed/bay_sunset/mosaic.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_sunset/mosaic_auto.jpg" width="400" height="300"> </td>
     </tr>
     <tr>
       <th>The Bay Nighttime</th>
     </tr>
     <tr>
-      <td> <img src="images/processed/bay_night/mosaic_auto.jpg" width="600" height="600"> </td>
+      <td> <img src="images/processed/bay_night/mosaic.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_night/mosaic_auto.jpg" width="400" height="300"> </td>
     </tr>
     <tr>
       <th>Fleet Week</th>
     </tr>
     <tr>
-      <td> <img src="images/processed/b777/mosaic_auto.jpg" width="600" height="600"> </td>
+      <td> <img src="images/processed/b777/mosaic.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/b777/mosaic_auto.jpg" width="400" height="300"> </td>
     </tr>
   </table>
 </div>
 
 <div class="HomeContainer">
   <h2>What I have learned.</h2>
-  I think that the entire formulation on how to find good features and match correspondences is an interesting solution to a difficult problem. I think that the feature matching is one of the more interesting parts of the project; especially the use of Lowe's trick to solve the problem.
+  <p>I think that the entire formulation on how to find good features and match correspondences is an interesting solution to a difficult problem. I think that the feature matching is one of the more interesting parts of the project; especially the use of Lowe's trick to solve the problem. It is also cool to see that the B777 picture now lines up pretty well even if I didn't employ the best picture taking techniques. </p>
 </div>
 
 <div class="HomeContainer">
