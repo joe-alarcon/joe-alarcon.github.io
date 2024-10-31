@@ -244,42 +244,44 @@
 <div class="HomeContainer">
   <h2>Harris Corners and Adaptive Non-Maximal Suppression (ANMS)</h2>
   <h3>Approach</h3>
-  <p>In this part, we want to find points of interest. Namely, points that we can use as features to build the correspondences between images. These points of interest are called Harris corners. Using the provided starter code, the Harris corners along with their scores are calculated. Then, the ANMS algorithm allows us to suppress the vast majority of the Harris corners while maintaining a good distribution of them across the image. This is where we use the equation in the paper that developed ANMS: Multi-Image Matching using Multi-Scale Oriented Patches. 
-  \[ r_i = \max_j |x_i - x_j| \,\,\, \text{ s.t. } \,\,\, h(x_i) &lt; c_{robust} h(x_j) \]
+  <p>In this part, we want to find points of interest which we can use as features to automatically build the correspondences between images in a mosaic. These points of interest are called Harris corners. Using the provided starter code, the Harris corners along with their scores are calculated. Then, the ANMS algorithm allows us to suppress the vast majority of the Harris corners while maintaining a good distribution of them across the image. This is where we use the equation in the paper which introduced ANMS. The paper is titled “Multi-Image Matching using Multi-Scale Oriented Patches". 
+  \[ r_i = \max_j |x_i - x_j| \,\,\, \text{ s.t. } \,\,\, h(x_i) &lt; c_{\text{robust}} h(x_j) \]
   Compute this for all corners \(x_i\). Then, return a desired number of best corners (I chose to return the best 200), where a corner is best if its radius is large. This ensures that the Harris corners don't clump up and are distributed in the picture.
 
   </p>
 
   <h3>Results</h3>
+  <p>The images on the left include all of the Harris corners while the images on the right include the corners after ANMS. </p>
+
   <h4>SF Skyline</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/sf/corners_im1.jpg" width="300" height="400"> </td>
-      <td> <img src="images/processed/sf/corners_im2.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/sf/corners_im1.jpg" width="500" height="500"> </td>
+      <td> <img src="images/processed/sf/corners_im2.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>Bay Area Sunset</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/bay_sunset/corners_im1.jpg" width="400" height="300"> </td>
-      <td> <img src="images/processed/bay_sunset/corners_im2.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_sunset/corners_im1.jpg" width="500" height="500"> </td>
+      <td> <img src="images/processed/bay_sunset/corners_im2.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>Bay Area Nighttime</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/bay_night/corners_im1.jpg" width="400" height="300"> </td>
-      <td> <img src="images/processed/bay_night/corners_im2.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_night/corners_im1.jpg" width="500" height="500"> </td>
+      <td> <img src="images/processed/bay_night/corners_im2.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>United B777 - Bay Fleet Week</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/b777/corners_im1.jpg" width="300" height="400"> </td>
-      <td> <img src="images/processed/b777/corners_im2.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/b777/corners_im1.jpg" width="500" height="500"> </td>
+      <td> <img src="images/processed/b777/corners_im2.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 </div>
@@ -287,10 +289,10 @@
 <div class="HomeContainer">
   <h2>Feature Descriptor Extraction</h2>
   <h3>Approach</h3>
-  <p> Now that we have the points of interest, we want to extract the feature that makes this point interesting. By doing this, we can reference the same features across images even if the exact pixel values are not the same. This is done by taking a 40 by 40 window around each ANMS corner from the original image and resizing this window to be 8 by 8. Finally, demean and divide by the standard deviation to normalize the feature. This blurs the pixel values and allows us to compare features across images. </p>
+  <p> Now that we have the points of interest, we want to extract the feature that makes this point interesting. By doing this, we can reference the same features across images even if the exact pixel values are not the same. This is done by taking a 40 by 40 window from the original image centered at each ANMS corner and resizing this window to be 8 by 8. Finally, demean and divide by the standard deviation to normalize the feature. This blurs the pixel values and allows us to compare features across images. </p>
   
   <h3>Results</h3>
-  <p> Some of the features extracted as mentioned above. </p>
+  <p> Some of the features extracted as mentioned above. Note that these are not the normalized features. </p>
   
   <h4>SF Skyline</h4>
   <table>
@@ -328,10 +330,10 @@
 <div class="HomeContainer">
   <h2>Feature Matching</h2>
   <h3>Approach</h3>
-  <p> Now that we have the features for the images of the mosaic and the list of the corners from ANMS, we want to put everything together to obtain match the corners. This is performed with Lowe's trick.
+  <p> Now that we have the features for the images of the mosaic and the list of the corners from ANMS, we want to put everything together to obtain the matches for the corners. This is performed with Lowe's trick.
   <ol>
     <li>Take the pairwise difference of all of the feature patches from the previous part. Compute the norm squared of these differences to obtain a single value for each pair of features. </li>
-    <li>Make a copy of these values, sort them, and call these sorted values the nearest neighbor. </li>
+    <li>Make a copy of these values, sort them, and call these sorted values the nearest neighbors. </li>
     <li>Apply Lowe's trick by taking the ratio of of the 1st nearest neighbor and the 2nd nearest neighbor. If this ratio is smaller than a certain threshold (0.5), then accept a feature's match with its 1st closest neighbor. Otherwise reject it. </li>
     <li>Return the set of matched corners. </li>
   </ol>  
@@ -339,32 +341,32 @@
 
   <h3>Results</h3>
   <p>For each of the images below, you can see the matched corners after ANMS for both images. </p>
-  
+
   <h4>SF Skyline</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/sf/anms_matched_corners.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/sf/anms_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>Bay Area Sunset</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/bay_sunset/anms_matched_corners.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_sunset/anms_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>Bay Area Nighttime</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/bay_night/anms_matched_corners.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_night/anms_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>United B777 - Bay Fleet Week</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/b777/anms_matched_corners.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/b777/anms_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 </div>
@@ -386,28 +388,28 @@
   <h4>SF Skyline</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/sf/ransac_matched_corners.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/sf/ransac_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>Bay Area Sunset</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/bay_sunset/ransac_matched_corners.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_sunset/ransac_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>Bay Area Nighttime</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/bay_night/ransac_matched_corners.jpg" width="400" height="300"> </td>
+      <td> <img src="images/processed/bay_night/ransac_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 
   <h4>United B777 - Bay Fleet Week</h4>
   <table>
     <tr>
-      <td> <img src="images/processed/b777/ransac_matched_corners.jpg" width="300" height="400"> </td>
+      <td> <img src="images/processed/b777/ransac_matched_corners.jpg" width="500" height="500"> </td>
     </tr>
   </table>
 </div>
@@ -418,6 +420,8 @@
   <p> With these correspondence points, compute the mosaic as was done in Project 4A. </p>
 
   <h3>Results</h3>
+  <p>Note, the B777 mosaic is still not perfect because I moved the camera and the center or projection as well when taking the pictures. </p>
+
   <table>
     <tr>
       <th>San Francisco Skyline</th>
