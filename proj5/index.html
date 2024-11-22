@@ -239,6 +239,38 @@
   </table>
 </div>
 
+<div class="HomeContainer">
+  <h2>1.6: Classifier Free Guidance (CFG) </h2>
+  <h3>Approach</h3>
+  <p> Up to now, all of the calls to the Diffusion model have had a prompt that was acting as the null/empty prompt. This prompt is “a high quality photo". However, we want the model to be able to compare the noise of a true null prompt or completely unconditioned denoising to the prompt that we actually want to work towards. This is achieved by taking into account the unconditional noise which is defined as the noise for the null prompt/class, which is literally the empty string. This gives us a new noise estimation: \[ \epsilon = \epsilon_u + \gamma (\epsilon_c - \epsilon_u) \] where \(\gamma\) is a scaling factor which essentially controls the strength of the CFG. By setting \(\gamma >1\), we can actually get much more higher quality images. In terms of the actual implementation, everything else is exactly the same as it was before. </p>
+
+  <h3>Results</h3>
+  <p>Note that these images were upsampled using different methods so that's why there's a notable difference in equality. However, compared to the samples without CFG, we get much better quality in the images. </p>
+  <table>
+    <tr>
+      <td> Sample 1 </td>
+      <td> Sample 2 </td>
+      <td> Sample 3 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 6/sample4.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 6/sample5.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 6/sample8.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td> Sample 4 </td>
+      <td> Sample 5 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 6/sample9.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 6/sample10.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+
 <h1>Project 5B</h1>
 
 </body>
