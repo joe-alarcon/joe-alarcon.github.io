@@ -58,7 +58,7 @@
 <h1>Project 5A</h1>
 <div class="HomeContainer">
   <h2>Overview</h2>
-  <h3 style="text-align: center;"> The first part of the project uses the DeepFloyd model's parameters and implementation to make our own denoisers and also do different things with these denoisers. The focus here is to rebuild the sampling model using the already trained model. </h3>
+  <h3 style="text-align: center;"> The first part of the project uses the DeepFloyd model's parameters and implementation to make our own denoisers and also do different things with these denoisers. The focus here is to rebuild the sampling model using the already trained model. Throughout this project, I always reseed with seed=1729 before running any sampling/random process. </h3>
 </div>
 
 <div class="HomeContainer">
@@ -270,6 +270,373 @@
   </table>
 </div>
 
+<div class="HomeContainer">
+  <h2>1.7: Image to Image Translation </h2>
+  <h3>Approach</h3>
+  <p> For this part, simply noise a test image up to some value of \(t\) determined by i_start (lower i_start is higher \(t\)) and then denoise with CFG. </p>
+
+  <h3>Results</h3>
+  <h4>Campanille SDEdit (image-2-image translation) for different i_start </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7/campanille_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/campanille_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/campanille_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/campanille_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/campanille_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/campanille_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/campanille/original.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+  
+  <h4>Beach SDEdit (image-2-image translation) for different i_start </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7/beach_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/beach_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/beach_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/beach_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/beach_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/beach_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Data/beach.jpg" width="200" height="200"> </td>
+    </tr>
+  </table>
+
+  <h4>Dog SDEdit (image-2-image translation) for different i_start </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7/dog_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/dog_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/dog_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/dog_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/dog_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7/dog_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Data/dog.jpg" width="200" height="200"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.7.1: Image to Image Translation for a Web image and Hand-Drawn images </h2>
+  <h3>Approach</h3>
+  <p> Exact approach as 1.7 but with more images. </p>
+
+  <h3>Results</h3>
+  <h4>Chill Guy (web image) for different i_start </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/chillguy_edit/chillguy.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+  
+  <h4>F22 (drawn image) for different i_start </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/f22_edit/f22.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+
+  <h4>Troll Face (drawn image) for different i_start </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.1/troll_edit/troll.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.7.2: Image Inpainting </h2>
+  <h3>Approach</h3>
+  <p> Replace a selected region of the image with new content generated by the Diffusion Model with CFG. Before each iteration, update the current \(x_t\) as follows: \[ x_t \leftarrow m \cdot x_t + (1 - m) \cdot \text{forward}(x_0, t) \] where \(m\) is a mask with the same dimensions as the image and has 1s wherever we want to place the new content and 0s elsewhere.  </p>
+
+  <h3>Results</h3>
+  <h4> Campanille </h4>
+  <table>
+    <tr>
+      <td> Original </td>
+      <td> Mask </td>
+      <td> Selected Region </td>
+      <td> Result </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.2/campanille/original.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/campanille/mask.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/campanille/masked_region.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/campanille/result.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+  
+  <h4> Dog 2 </h4>
+  <table>
+    <tr>
+      <td> Original </td>
+      <td> Mask </td>
+      <td> Selected Region </td>
+      <td> Result </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.2/dog/original.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/dog/mask.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/dog/masked_region.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/dog/result.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+
+  <h4> Bridge </h4>
+  <table>
+    <tr>
+      <td> Original </td>
+      <td> Mask </td>
+      <td> Selected Region </td>
+      <td> Result </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.2/bridge/original.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/bridge/mask.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/bridge/masked_region.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/bridge/result.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+
+  <h4> Flower </h4>
+  <table>
+    <tr>
+      <td> Original </td>
+      <td> Mask </td>
+      <td> Selected Region </td>
+      <td> Result </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.2/flower/original.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/flower/mask.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/flower/masked_region.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/flower/result.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.7.3: Image to Image Translation with Specific Prompt </h2>
+  <h3>Approach</h3>
+  <p> Exact approach as 1.7 and 1.7.1 but now we specify a prompt instead of just passing in the generic “a high quality photo" prompt. Essentially, by providing a prompt, we are “guiding" the denoising process. </p>
+
+  <h3>Results</h3>
+  <h4>Campanille - “a rocket ship" </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.3/campanille_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/campanille_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/campanille_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/campanille_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/campanille_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/campanille_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.2/campanille/original.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+  
+  <h4>Beach - “a photo of the amalfi coast" </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.3/beach_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/beach_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/beach_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/beach_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/beach_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/beach_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Data/beach.jpg" width="200" height="200"> </td>
+    </tr>
+  </table>
+
+  <h4>Dog - “a photo of a dog" </h4>
+  <table>
+    <tr>
+      <td> i_start = 1 </td>
+      <td> i_start = 3 </td>
+      <td> i_start = 5 </td>
+      <td> i_start = 7 </td>
+      <td> i_start = 10 </td>
+      <td> i_start = 20 </td>
+      <td> Original </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 7.3/dog_edit/istart1.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/dog_edit/istart3.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/dog_edit/istart5.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/dog_edit/istart7.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/dog_edit/istart10.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 7.3/dog_edit/istart20.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Data/dog.jpg" width="200" height="200"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.8: Visual Anagrams</h2>
+  <h3>Approach</h3>
+  <p> The main idea behind anagrams is that we want a picture to contain two pictures. One of them is visible in one direction and flipping the image the other way around causes the second one to become visible. This can be done by “blending" together the predicted noise during the sampling process for two different prompts. Mathematically, the new noise estimate is calculated by: \[ \epsilon_1 = \text{UNet}(x_t, t, p_1), \qquad \epsilon_2 = \text{flip}(\text{UNet}(\text{flip}(x_t), t, p_1)), \qquad \epsilon = (\epsilon_1 + \epsilon_2) / 2 \] where flip flips an image and \(p_1,p_2\) are the two different prompts. Everything else is done the exact same way as in CFG. </p>
+
+  <h3>Results</h3>
+  <p> I had to sample many times using different seeds until I got decent enough results. (+0, +6, +0) respectively added to the base seed=1729 </p>
+  <table>
+    <tr>
+      <td> an oil painting of an old man </td>
+      <td> an oil painting of people around a campfire </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 8/man_campfire.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 8/man_campfire_reverse.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td> a painting of abraham lincoln's face </td>
+      <td> a painting of a lion </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 8/abraham_lion2.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 8/abraham_lion2_reverse.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td> a golden eagle </td>
+      <td> a fighter jet </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 8/eagle_jet.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 8/eagle_jet_reverse.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.9: Hybrid Images</h2>
+  <h3>Approach</h3>
+  <p> The main idea behind hybrid images is that we want a picture to contain two pictures again. One of them is visible from far away (contains the low frequencies of the image) and the other is visible up close (contains the high frequencies of the image). This can be done by “blending" together the predicted noise during the sampling process for two different prompts. Mathematically, the new noise estimate is calculated by: \[ \epsilon_1 = \text{UNet}(x_t, t, p_1), \qquad \epsilon_2 = \text{UNet}(x_t, t, p_1), \qquad \epsilon = f_{\text{LP}}(\epsilon_1) + f_{\text{HP}}(\epsilon_2) \] where \(f_{\text{LP}}, f_{\text{HP}}\) are a low pass and high pass filters, respectively. These were implemented with Gaussian blurring using kernel of size 33 and sigma 2 for the low pass and kernel size 11 and sigma 2 for the high pass (image - low pass is the high frequencies). Everything else is done the exact same way as in CFG. </p>
+
+  <h3>Results</h3>
+  <p> Similarly to 1.8, I had to sample many times using different seeds until I got decent enough results. (+0, +19, +4) respectively added to the base seed=1729 </p>
+  <table>
+    <tr>
+      <td> a lithograph of a skull </td>
+      <td> a lithograph of waterfalls </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 9/skull_waterfall.png" width="50" height="50"> </td>
+      <td> <img src="images_5a/Results/Part 9/skull_waterfall.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td> a polar bear </td>
+      <td> a dense snowy forest </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 9/tree_bear.png" width="50" height="50"> </td>
+      <td> <img src="images_5a/Results/Part 9/tree_bear.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td> a painting of a green bird </td>
+      <td> a painting of tree leaves </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 9/leaf_bird.png" width="50" height="50"> </td>
+      <td> <img src="images_5a/Results/Part 9/leaf_bird.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
 
 <h1>Project 5B</h1>
 
