@@ -105,7 +105,7 @@
 <div class="HomeContainer">
   <h2>1.1: Forward Process</h2>
   <h3>Approach</h3>
-  <p>For this section, we implement the noising function which adds a certain amount of noise to an image. The scaling is determined by already trained parameters in the DeepFloyd model. The formula for this is: \[ x_t = \sqrt{\overline{\alpha}_t}x_0 + \sqrt{1- \overline{\alpha}_t}\epsilon \qquad \epsilon \sim \mathcal{N}(0,1) \]
+  <p>For this section, we implement the noising function which adds a certain amount of noise to an image. The scaling is determined by already trained parameters in the DeepFloyd model. The formula for this is: \[ x_t = \sqrt{\overline{\alpha}_t} \, x_0 + \sqrt{1- \overline{\alpha}_t} \, \epsilon \qquad \epsilon \sim \mathcal{N}(0,1) \]
     where \(t\) can go from 1 to 1000, and a higher \(t\) corresponds to a noiser image. Using the provided test image, add noise for \(t = 250, 500, 750\).
   </p>
 
@@ -150,7 +150,7 @@
 <div class="HomeContainer">
   <h2>1.3: One-Step Denoise</h2>
   <h3>Approach</h3>
-  <p>The Diffusion model can predict the amount of noise in the image so that it can be removed. This is where the UNet, the main neural network component/architecture, of the model resides. It was trained so that it can predict the noise in an image given the noisy image and the current time step \(t\). This uses the same formula as 1.1, but we solve for \(x_0\), so we have \[ x_0 = \frac{1}{\sqrt{\overline{\alpha}_t}} (x_t - \sqrt{1- \overline{\alpha}_t}\hat{\epsilon}) \] where \(\hat{\epsilon}\) is the predicted noise in the image. </p>
+  <p>The denoising done previously is not very good, so let's use the Diffusion model. The Diffusion model can predict the amount of noise in the image so that it can be removed. This is where the UNet, the main neural network component/architecture, of the model resides. It was trained so that it can predict the noise in an image given the noisy image and the current time step \(t\). This uses the same formula as 1.1, but we solve for \(x_0\), so we have \[ \hat{x}_0 = \frac{1}{\sqrt{\overline{\alpha}_t}} (x_t - \sqrt{1- \overline{\alpha}_t} \, \hat{\epsilon}) \] where \(\hat{\epsilon}\) is the predicted noise in the image. Notice that this will be an approximate image since the model is making a prediction. This can be seen below where the original noisier image looks very different to the original. However, the model removed the noise a lot better than Gaussian blurring did. </p>
 
   <h3>Results</h3>
   <table>
@@ -163,6 +163,47 @@
       <td> <img src="images_5a/Results/Part 3/t250.png" width="300" height="300"> </td>
       <td> <img src="images_5a/Results/Part 3/t500.png" width="300" height="300"> </td>
       <td> <img src="images_5a/Results/Part 3/t750.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.4: Iterative Denoise</h2>
+  <h3>Approach</h3>
+  <p> Diffusion models are designed to iteratively denoise an image, step-by-step, instead of just taking one huge leap. We implement that part of the model here using the following formula:
+    \[x_{t'} = \frac{\sqrt{\overline{\alpha}_{t'}}\beta_t}{1-\overline{\alpha}_{t}}x_0 + \frac{\sqrt{\alpha_t}(1-\overline{\alpha}_{t'})}{1-\overline{\alpha}_{t}}x_t + v_\sigma  \]
+    where \(t > t', \,\, \alpha_t = \overline{\alpha}_t/\overline{\alpha}_{t'}, \,\, \beta_t = 1-\alpha_t\), \(x_0\) is the current prediction for the original image using \(x_t\), so the equation written in section 1.3, and \(v_\sigma\) is the predicted random noise independent of the noise in the image. Recall that we want to go from larger to smaller \(t\). </p>
+
+  <h3>Results</h3>
+  <h4>Some samples of the iterative denoising process</h4>
+  <table>
+    <tr>
+      <td> t=690 </td>
+      <td> t=540 </td>
+      <td> t=390 </td>
+      <td> t=240 </td>
+      <td> t=90 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 4/t690.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 4/t540.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 4/t390.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 4/t240.png" width="200" height="200"> </td>
+      <td> <img src="images_5a/Results/Part 4/t90.png" width="200" height="200"> </td>
+    </tr>
+  </table>
+
+  <h4>Comparing the three different denoising methods</h4>
+  <table>
+    <tr>
+      <td> Blurring </td>
+      <td> One-Step </td>
+      <td> Iterative </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 4/blurring.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 4/one_step.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 4/iterative.png" width="300" height="300"> </td>
     </tr>
   </table>
 </div>
