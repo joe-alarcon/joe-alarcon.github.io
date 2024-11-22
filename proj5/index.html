@@ -48,6 +48,83 @@
 <body>
 
 <h1>Project 5</h1>
+<div class="HomeContainer">
+  <h2>Overview</h2>
+  <h3 style="text-align: center;"> This project was all about Diffusion and the neural network implementation, UNets, which allow us to denoise an image of random noise into an actual image. </h3>
+</div>
+
+<h1>Project 5A</h1>
+<div class="HomeContainer">
+  <h2>Overview</h2>
+  <h3 style="text-align: center;"> The first part of the project uses the DeepFloyd model's parameters and implementation to make our own denoisers and also do different things with these denoisers. The focus here is to rebuild the sampling model using the already trained model. </h3>
+</div>
+
+<div class="HomeContainer">
+  <h2>Using DeepFloyd</h2>
+  <h3>Approach</h3>
+  <p>For this first section, we only had to make a prompt and obtain its text embedding, which the DeepFloyd model also provides, and sample the model for the following images. The prompts used are: “an oil painting of a snowy mountain village", “a man wearing a hat", and “a rocket ship". The model has two parts: the first one samples the image and the second one upsamples the output of the first part since this output is only 64 x 64 pixels. Furthermore, by increasing the number of steps that the model can perform in the sampling and upsampling process, the better/more detailed images it can generate. This can be seen in the rocket images where the number of inference steps is 50.</p>
+
+  <h3>Results</h3>
+  <p>I made both images appear to have the same size but notice that the pictures on the left are more pixelated; these are the ones that were not upsampled. </p>
+
+  <h4>an oil painting of a snowy mountain village</h4>
+  <table>
+    <tr>
+      <td> <img src="images_5a/Results/Part 0/village_64_20.png" width="400" height="400"> </td>
+      <td> <img src="images_5a/Results/Part 0/village_256_20.png" width="400" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>a man wearing a hat</h4>
+  <table>
+    <tr>
+      <td> <img src="images_5a/Results/Part 0/man_64_20.png" width="400" height="400"> </td>
+      <td> <img src="images_5a/Results/Part 0/man_256_20.png" width="400" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>a rocket ship (20)</h4>
+  <table>
+    <tr>
+      <td> <img src="images_5a/Results/Part 0/rocket_64_20.png" width="400" height="400"> </td>
+      <td> <img src="images_5a/Results/Part 0/rocket_256_20.png" width="400" height="400"> </td>
+    </tr>
+  </table>
+
+  <h4>a rocket ship (50)</h4>
+  <table>
+    <tr>
+      <td> <img src="images_5a/Results/Part 0/rocket_64_50.png" width="400" height="400"> </td>
+      <td> <img src="images_5a/Results/Part 0/rocket_256_50.png" width="400" height="400"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>Forward Process</h2>
+  <h3>Approach</h3>
+  <p>For this section, we implement the noising function which adds a certain amount of noise to an image. The scaling is determined by already trained parameters in the DeepFloyd model. The formula for this is: \[ x_t = \sqrt{\overline{\alpha}_t}x_0 + \sqrt{1- \overline{\alpha}_t}\epsilon \qquad \epsilon \sim \mathcal{N}(0,1) \]
+    where \(t\) can go from 1 to 1000, and a higher \(t\) corresponds to a noiser image. Using the provided test image, add noise for \(t = 250, 500, 750\).
+  </p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <td> t=0 </td>
+      <td> t=250 </td>
+      <td> t=500 </td>
+      <td> t=750 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 1/t0.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 1/t250.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 1/t500.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 1/t750.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<h1>Project 5B</h1>
 
 </body>
 </html>
