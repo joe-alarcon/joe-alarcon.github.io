@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>CS 180 Project 5</title>
     <link rel="stylesheet" type="text/css" href="/static/styling.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <header>
@@ -60,7 +62,7 @@
 </div>
 
 <div class="HomeContainer">
-  <h2>Using DeepFloyd</h2>
+  <h2>1.0: Using DeepFloyd</h2>
   <h3>Approach</h3>
   <p>For this first section, we only had to make a prompt and obtain its text embedding, which the DeepFloyd model also provides, and sample the model for the following images. The prompts used are: “an oil painting of a snowy mountain village", “a man wearing a hat", and “a rocket ship". The model has two parts: the first one samples the image and the second one upsamples the output of the first part since this output is only 64 x 64 pixels. Furthermore, by increasing the number of steps that the model can perform in the sampling and upsampling process, the better/more detailed images it can generate. This can be seen in the rocket images where the number of inference steps is 50.</p>
 
@@ -101,7 +103,7 @@
 </div>
 
 <div class="HomeContainer">
-  <h2>Forward Process</h2>
+  <h2>1.1: Forward Process</h2>
   <h3>Approach</h3>
   <p>For this section, we implement the noising function which adds a certain amount of noise to an image. The scaling is determined by already trained parameters in the DeepFloyd model. The formula for this is: \[ x_t = \sqrt{\overline{\alpha}_t}x_0 + \sqrt{1- \overline{\alpha}_t}\epsilon \qquad \epsilon \sim \mathcal{N}(0,1) \]
     where \(t\) can go from 1 to 1000, and a higher \(t\) corresponds to a noiser image. Using the provided test image, add noise for \(t = 250, 500, 750\).
@@ -120,6 +122,47 @@
       <td> <img src="images_5a/Results/Part 1/t250.png" width="300" height="300"> </td>
       <td> <img src="images_5a/Results/Part 1/t500.png" width="300" height="300"> </td>
       <td> <img src="images_5a/Results/Part 1/t750.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.2: Classical Denoise</h2>
+  <h3>Approach</h3>
+  <p>Usually, we would denoise a picture by applying a Gaussian blur filter (low pass filter with kernel size 7 and sigma 2) to the image. We do this because noise tends to be high frequency, so it gets filtered out whenever we apply this blur. Below are the results.
+  </p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <td> t=250 </td>
+      <td> t=500 </td>
+      <td> t=750 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 2/t250.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 2/t500.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 2/t750.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.3: One-Step Denoise</h2>
+  <h3>Approach</h3>
+  <p>The Diffusion model can predict the amount of noise in the image so that it can be removed. This is where the UNet, the main neural network component/architecture, of the model resides. It was trained so that it can predict the noise in an image given the noisy image and the current time step \(t\). This uses the same formula as 1.1, but we solve for \(x_0\), so we have \[ x_0 = \frac{1}{\sqrt{\overline{\alpha}_t}} (x_t - \sqrt{1- \overline{\alpha}_t}\hat{\epsilon}) \] where \(\hat{\epsilon}\) is the predicted noise in the image. </p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <td> t=250 </td>
+      <td> t=500 </td>
+      <td> t=750 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 3/t250.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 3/t500.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 3/t750.png" width="300" height="300"> </td>
     </tr>
   </table>
 </div>
