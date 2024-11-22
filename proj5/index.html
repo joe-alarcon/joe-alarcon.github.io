@@ -171,8 +171,9 @@
   <h2>1.4: Iterative Denoise</h2>
   <h3>Approach</h3>
   <p> Diffusion models are designed to iteratively denoise an image, step-by-step, instead of just taking one huge leap. We implement that part of the model here using the following formula:
-    \[x_{t'} = \frac{\sqrt{\overline{\alpha}_{t'}}\beta_t}{1-\overline{\alpha}_{t}}x_0 + \frac{\sqrt{\alpha_t}(1-\overline{\alpha}_{t'})}{1-\overline{\alpha}_{t}}x_t + v_\sigma  \]
-    where \(t > t', \,\, \alpha_t = \overline{\alpha}_t/\overline{\alpha}_{t'}, \,\, \beta_t = 1-\alpha_t\), \(x_0\) is the current prediction for the original image using \(x_t\), so the equation written in section 1.3, and \(v_\sigma\) is the predicted random noise independent of the noise in the image. Recall that we want to go from larger to smaller \(t\). </p>
+    \[x_{t'} = \frac{\sqrt{\overline{\alpha}_{t'}} \, \beta_t}{1-\overline{\alpha}_{t}}\hat{x}_0 + \frac{\sqrt{\alpha_t}(1-\overline{\alpha}_{t'})}{1-\overline{\alpha}_{t}}x_t + v_\sigma  \]
+    where \(t > t', \,\, \alpha_t = \overline{\alpha}_t/\overline{\alpha}_{t'}, \,\, \beta_t = 1-\alpha_t\), \(\hat{x}_0\) is the current prediction for the original image using \(x_t\), so the equation written in section 1.3, and \(v_\sigma\) is the predicted variance in the noise. Recall that we want to go from larger to smaller \(t\). </p>
+    <p> These images were made by firstly noising the original image to time 690 and then iteratively denoising as explained above. Note that it is possible to skip values of \(t\), so our schedule decreases \(t\) not by 1 but by 30 at each iteration.  </p>
 
   <h3>Results</h3>
   <h4>Some samples of the iterative denoising process</h4>
@@ -204,6 +205,36 @@
       <td> <img src="images_5a/Results/Part 4/blurring.png" width="300" height="300"> </td>
       <td> <img src="images_5a/Results/Part 4/one_step.png" width="300" height="300"> </td>
       <td> <img src="images_5a/Results/Part 4/iterative.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+</div>
+
+<div class="HomeContainer">
+  <h2>1.5: Diffusion Sampling</h2>
+  <h3>Approach</h3>
+  <p>Using the above procedure, generate an image of purely random Gaussian noise and feed it into the model starting with time 990. The Diffusion model will denoise this into some image. </p>
+
+  <h3>Results</h3>
+  <table>
+    <tr>
+      <td> Sample 1 </td>
+      <td> Sample 2 </td>
+      <td> Sample 3 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 5/sample1.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 5/sample2.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 5/sample3.png" width="300" height="300"> </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td> Sample 4 </td>
+      <td> Sample 5 </td>
+    </tr>
+    <tr>
+      <td> <img src="images_5a/Results/Part 5/sample4.png" width="300" height="300"> </td>
+      <td> <img src="images_5a/Results/Part 5/sample5.png" width="300" height="300"> </td>
     </tr>
   </table>
 </div>
