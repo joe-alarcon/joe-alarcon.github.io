@@ -672,3 +672,9 @@ button.CancelPostBtn {
 img {
     margin-bottom: 50px;
 }
+
+img.non-boxed {
+    align-self: center;
+    margin-bottom: 0px;
+    padding: 5px;
+}

@@ -651,51 +651,51 @@
   <p> This image is taken directly from the CS 180 website specifications. For this first part of the project, I implemented this neural network architecture using PyTorch nn modules. The neural net minimizes the MSE Loss: \[ \mathbb{E}_{x,z} \| D_\theta(z) - x \|^2 \] where \(x\) is the image in the MNIST dataset, \(z = x + \sigma\epsilon \) is the noised image where \(\epsilon \sim \mathcal{N}(0,I) \) and \( \sigma \in \{ 0.0,0.2,0.4,0.5,0.6,0.8,1.0 \} \). The model \(D_\theta(\cdot)\) then tries to recover the original image from the given noised image. For training, \(\sigma = 0.5\) fixed, the hidden layer has dimension 128, and use Adams optimizer with \(10^{-4}\) learning rate. </p>
 
   <h3>Results</h3>
-  <h4>Images in the MNIST dataset noised at different levels, according to \(\sigma\) above.</h4>
-  <img src="images_5b/Part1/figure3.png" width="500" height="250"> 
+  <h4>Figure 3: Images in the MNIST dataset noised at different levels, according to \(\sigma\) above.</h4>
+  <img class="non-boxed" src="images_5b/Part1/figure3.png" width="500" height="250"> 
 
-  <h4>Training Loss</h4>
-  <img src="images_5b/Part1/figure4.png" width="300" height="250"> 
+  <h4>Figure 4: Training Loss</h4>
+  <img class="non-boxed" src="images_5b/Part1/figure4.png" width="600" height="500"> 
 
-  <h4>Model Output after 1st Epoch on Test images</h4>
-  <img src="images_5b/Part1/figure5.png" width="300" height="250"> 
+  <h4>Figure 5: Model Output after 1st Epoch on Test images</h4>
+  <img class="non-boxed" src="images_5b/Part1/figure5.png" width="300" height="250"> 
 
-  <h4>Model Output after 5th Epoch on Test images</h4>
-  <img src="images_5b/Part1/figure6.png" width="300" height="250"> 
+  <h4>Figure 6: Model Output after 5th Epoch on Test images</h4>
+  <img class="non-boxed" src="images_5b/Part1/figure6.png" width="300" height="250"> 
 
-  <h4>Model Output - out of distribution</h4>
+  <h4>Figure 7: Model Output - out of distribution</h4>
   <p>This means that the input to the model is an image with \(\sigma\) different to 0.5. </p>
-  <img src="images_5b/Part1/figure7.png" width="300" height="250"> 
+  <img class="non-boxed" src="images_5b/Part1/figure7.png" width="400" height="250"> 
   
 </div>
 
 <div class="HomeContainer">
   <h2>2.2.1 - 2.2.3: Training and Sampling the Time-Conditioned Diffusion Model</h2>
   <h3>Approach</h3>
-  <img src="images_5b/Part2/conditional_arch.png" width="500" height="250"> 
+  <img class="non-boxed" src="images_5b/Part2/conditional_arch.png" width="500" height="250"> 
   <p> This image is taken directly from the CS 180 website specifications. For this part of the project, I implemented this neural network architecture using the existing implmentation for the UNet in the previous section and added the necessary modules for time conditioning as outlined above. This UNet will predict the noise that is present in the image, instead of actually trying to recover the image. Mathematically, \[ \mathbb{E}_{\epsilon,z} \| \epsilon_\theta(z) - \epsilon \|^2 \] 
   
   Recall that diffusion iteratively denoises images, so we will again use the following equation: \[ x_t = \sqrt{\overline{\alpha}_t} \, x_0 + \sqrt{1- \overline{\alpha}_t} \, \epsilon \qquad \epsilon \sim \mathcal{N}(0,1) \] Specifically, we use it in the following algorithm for training the time-conditioned UNet as we want to learn the noise in an image given the current time: </p>
-  <img src="images_5b/Part2/algo1_t_only.png" width="300" height="300"> 
+  <img class="non-boxed" src="images_5b/Part2/algo1_t_only.png" width="400" height="200"> 
   <p>For training, \(\sigma = 0.5\) fixed, the hidden layer has dimension 128, and use Adams optimizer with \(10^{-3}\) as the starting learning rate and an exponentially decaying learning rate. Then, to sample from the trained UNet, follow </p>
-  <img src="images_5b/Part2/algo2_t_only.png" width="300" height="300"> 
+  <img class="non-boxed" src="images_5b/Part2/algo2_t_only.png" width="400" height="200"> 
 
   <h3>Results</h3>
   <h4>Training Loss for Time-Conditioned UNet</h4>
-  <img src="images_5b/Part2/figure10.png" width="300" height="250"> 
+  <img class="non-boxed" src="images_5b/Part2/figure10.png" width="600" height="500"> 
 
   <h4>Sampling Outputs at different stages of training</h4>
   <table>
     <tr><td>Epoch 1</td></tr>
-    <tr><td><img src="images_5b/Part2/time_cond/epoch1.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/time_cond/epoch1.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 5</td></tr>
-    <tr><td><img src="images_5b/Part2/time_cond/epoch5.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/time_cond/epoch5.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 10</td></tr>
-    <tr><td><img src="images_5b/Part2/time_cond/epoch10.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/time_cond/epoch10.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 15</td></tr>
-    <tr><td><img src="images_5b/Part2/time_cond/epoch15.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/time_cond/epoch15.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 20</td></tr>
-    <tr><td><img src="images_5b/Part2/time_cond/epoch20.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/time_cond/epoch20.png" width="600" height="400"> </td></tr>
   </table>
 </div>
 
@@ -705,27 +705,38 @@
   <p> For this last section of the project, I implemented the same neural network architecture using the existing implmentation for the UNet in the previous section but also added the necessary modules for class conditioning. This UNet also predicts the noise that is present in the image, instead of actually trying to recover the image. Mathematically, \[ \mathbb{E}_{\epsilon,z} \| \epsilon_\theta(z) - \epsilon \|^2 \] 
   
   The training algorithm encodes the feature/class of each image as a one-hot vector and performs dropout with probability 0.1. </p>
-  <img src="images_5b/Part2/algo3_c.png" width="300" height="300"> 
+  <img class="non-boxed" src="images_5b/Part2/algo3_c.png" width="400" height="200"> 
   <p>For training, the hidden layer has dimension 64, and use Adams optimizer with \(10^{-3}\) as the starting learning rate and an exponentially decaying learning rate. Then, to sample from the trained UNet, follow </p>
-  <img src="images_5b/Part2/algo4_c.png" width="300" height="300"> 
+  <img class="non-boxed" src="images_5b/Part2/algo4_c.png" width="400" height="200"> 
 
   <h3>Results</h3>
   <h4>Training Loss for Class-Conditioned UNet</h4>
-  <img src="images_5b/Part2/figure11.png" width="300" height="250"> 
+  <img class="non-boxed" src="images_5b/Part2/figure11.png" width="400" height="200"> 
 
   <h4>Sampling Outputs at different stages of training</h4>
   <table>
     <tr><td>Epoch 1</td></tr>
-    <tr><td><img src="images_5b/Part2/class_cond/epoch1.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/class_cond/epoch1.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 5</td></tr>
-    <tr><td><img src="images_5b/Part2/class_cond/epoch5.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/class_cond/epoch5.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 10</td></tr>
-    <tr><td><img src="images_5b/Part2/class_cond/epoch10.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/class_cond/epoch10.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 15</td></tr>
-    <tr><td><img src="images_5b/Part2/class_cond/epoch15.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/class_cond/epoch15.png" width="600" height="400"> </td></tr>
     <tr><td>Epoch 20</td></tr>
-    <tr><td><img src="images_5b/Part2/class_cond/epoch20.png" width="400" height="250"> </td></tr>
+    <tr><td><img src="images_5b/Part2/class_cond/epoch20.png" width="600" height="400"> </td></tr>
   </table>
+</div>
+
+<h1>Final Thoughts</h1>
+<div class="HomeContainer">
+  <h2>Bells and Whistles</h2>
+  <h3 style="text-align: center;"> I did not implement any B&W. </h3>
+</div>
+
+<div class="HomeContainer">
+  <h2>What I enjoyed</h2>
+  <p> Simply learning and having the opportunity to make our own small scale diffusion model in Part B was engaging and interesting. The first part of the project was also fun as I learned how to play around with the predicted noise to make different kinds of images. </p>
 </div>
 
 </body>
