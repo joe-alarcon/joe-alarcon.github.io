@@ -96,6 +96,7 @@ div#header {
     position: fixed;
     width: 100%;
     top: 0px;
+    z-index: 999;
 }
 
 div#AssignmentsAndTasks {
@@ -673,8 +674,10 @@ img {
     margin-bottom: 50px;
 }
 
-img.non-boxed {
-    align-self: center;
-    margin-bottom: 0px;
+img.nonboxed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5px;
+    margin-bottom: 20px;
 }
