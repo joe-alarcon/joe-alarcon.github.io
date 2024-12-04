@@ -245,8 +245,8 @@
   <h2>Harris Corners and Adaptive Non-Maximal Suppression (ANMS)</h2>
   <h3>Approach</h3>
   <p>In this part, we want to find points of interest which we can use as features to automatically build the correspondences between images in a mosaic. These points of interest are called Harris corners. Using the provided starter code, the Harris corners along with their scores are calculated. Then, the ANMS algorithm allows us to suppress the vast majority of the Harris corners while maintaining a good distribution of them across the image. This is where we use the equation in the paper which introduced ANMS. The paper is titled “Multi-Image Matching using Multi-Scale Oriented Patches". 
-  \[ r_i = \max_j |x_i - x_j| \,\,\, \text{ s.t. } \,\,\, h(x_i) &lt; c_{\text{robust}} h(x_j) \]
-  Compute this for all corners \(x_i\). Then, return a desired number of best corners (I chose to return the best 300 and I also set \(c_{\text{robust}} = 0.9\)), where a corner is best if its radius is large. This ensures that the Harris corners don't clump up and are distributed in the picture.
+  \[ r_i = \min_j |x_i - x_j| \,\,\, \text{ s.t. } \,\,\, h(x_i) &lt; c_{\text{robust}} h(x_j) \]
+  Compute this for all corners \(x_i\). Then, return a desired number of best corners (I chose to return the best 300 and I also set \(c_{\text{robust}} = 0.9\)), where a corner is best if it didn't get suppressed by other corners. This ensures that the Harris corners don't clump up and are distributed evenly across the picture.
 
   </p>
 
