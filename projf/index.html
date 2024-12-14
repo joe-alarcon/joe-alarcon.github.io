@@ -92,7 +92,7 @@
     </p>
 
     <h3>Results</h3>
-    <p>Some samples from the dataset with the nosetip point. </p>
+    <h4>Some samples from the dataset with the nosetip point. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part1/Samples/sample1.png" width="300" height="225"> </td>
@@ -102,10 +102,10 @@
         </tr>
     </table>
 
-    <p>The Loss curves</p>
+    <h4>The Loss curves</h4>
     <img src="face_keypoints/part1/loss.png" width="600" height="600">
 
-    <p>Some well classified points from the validation set. </p>
+    <h4>Some well classified points from the validation set. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part1/Results/good1.png" width="300" height="225"> </td>
@@ -115,7 +115,7 @@
         </tr>
     </table>
 
-    <p>Some poorly classified points from the validation set. </p>
+    <h4>Some poorly classified points from the validation set. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part1/Results/bad1.png" width="300" height="225"> </td>
@@ -162,7 +162,7 @@
     </p>
 
     <h3>Results</h3>
-    <p>Some samples from the dataset with the nosetip point. </p>
+    <h4>Some samples from the dataset with all of the keypoints. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part2/Samples/sample1.png" width="300" height="225"> </td>
@@ -172,13 +172,13 @@
         </tr>
     </table>
 
-    <p>The Loss curves</p>
+    <h4>The Loss curves</h4>
     <img src="face_keypoints/part2/loss.png" width="600" height="600">
 
-    <p>Some learned Convolution Kernels</p>
-    <img src="face_keypoints/part2/kernels.png" width="600" height="1200">
+    <h4>Some learned Convolution Kernels</h4>
+    <img src="face_keypoints/part2/kernels.png" width="800" height="1200">
 
-    <p>Some well classified points from the validation set. </p>
+    <h4>Some well classified points from the validation set. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part2/Results/good1.png" width="300" height="225"> </td>
@@ -188,7 +188,7 @@
         </tr>
     </table>
 
-    <p>Some poorly classified points from the validation set. </p>
+    <h4>Some poorly classified points from the validation set. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part2/Results/bad1.png" width="300" height="225"> </td>
@@ -214,13 +214,20 @@
             <li>A random color jitter transformation: 5% brightness and 10% contrast </li>
             <li>Normalize the image such that pixel values are within the range [-0.5,0.5]. </li>
         </ol>
-    Modify the previous part's custom keypoint transform such that it first calculates the ratios of the keypoints' coordinates. Then, proceed in the same manner. 
+    Modify the previous part's custom keypoint transform such that it first calculates the ratios of the keypoints' coordinates. Then, proceed in the same manner. </p>
 
-    After this data augmentation, we use PyTorch's built-in ResNET18 architecture to build our model. It is necessary to reset the first layer (a conv2d layer) so that it accepts input images with 1 channel and the last layer (a linear layer) so that it returns 136 outputs (68 pairs of (x,y) coordinates). I trained the ResNET18 with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 12 epochs.
+    <p>
+    After this data augmentation, we use PyTorch's built-in ResNET18 architecture to build our model which can be found <a href="https://pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html">here</a>. It is necessary to modify this architecture so that it accepts our data and returns the number of features we want it to. 
+    <ol>
+      <li>Reset the first layer (a conv2d layer) so that it accepts input images with 1 channel. Everything else is kept the same. </li>
+      <li>Reset the last layer (a linear layer) so that it returns 136 outputs (68 pairs of (x,y) coordinates). Everything else is kept the same. </li>
+    </ol> 
+    I trained the pretrained ResNET18 with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 12 epochs. Below, you can find the architecture of PyTorch's ResNET18 taken from <a href="https://pytorch.org/hub/pytorch_vision_resnet/">here</a>:
     </p>
+    <img src="resnet18.png" width="400" height="300">
 
     <h3>Results</h3>
-    <p>Some samples from the dataset with the nosetip point. </p>
+    <h4>Some samples from the dataset with all the keypoints. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part3/Samples/sample1.png" width="300" height="225"> </td>
@@ -230,10 +237,10 @@
         </tr>
     </table>
 
-    <p>The Loss curves</p>
+    <h4>The Loss curves</h4>
     <img src="face_keypoints/part3/loss.png" width="400" height="400">
 
-    <p>Some well classified points from the validation set. </p>
+    <h4>Some well classified points from the validation set. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part3/Results/good1.png" width="300" height="225"> </td>
@@ -242,7 +249,7 @@
         </tr>
     </table>
 
-    <p>Some poorly classified points from the validation set. </p>
+    <h4>Some poorly classified points from the validation set. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part3/Results/bad1.png" width="300" height="225"> </td>
@@ -278,11 +285,24 @@
     <h3>Approach</h3>
     <p>This part uses the exact same data as the previous one. However, instead of training on the keypoints, we will train the model on heatmaps modelled by 2D Gaussians which essentially represent a probability distribution for the location of a keypoint. Specifically, I made a grid represeting the pixel coordinates of the image and then evaluated a Gaussian kernel on the grid centered at the keypoint and using \(\sigma = 5.0\) to generate the kernels. In summary, simply make Gaussian kernels centered at the 68 keypoints and turn them into the channels. This also involved changing the custom dataset such that it calculates the heatmaps for the keypoints and returns the heatmaps as the labels. </p>
     
-    <p>Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/stable/models/generated/torchvision.models.segmentation.fcn_resnet50.html#torchvision.models.segmentation.fcn_resnet50">here</a> to make our predictions. This is because its output images are of the same dimensions as the inputs (the heatmaps). Also, I could not load in Pytorch's UNet into Colab as it caused an out of RAM error. We specify that the number of in channels is 1 (greyscale) and 68 out channels with 50176 features (224 times 224). Consequently, the training parameters also change: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one. Moreover, the epochs were taking so long (30 minutes each with 6000 train images) that I was only able to train my model for 4 epochs. However, that did not hinder the model.
+    <p>Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/main/models/generated/torchvision.models.segmentation.fcn_resnet50.html">here</a> to make our predictions. This is because its output are images of the same dimensions as the inputs, ie. the outputs are the heatmaps. Also, I did not use Pytorch's UNet because I could not load in into Colab as it caused an out of RAM error. I made the following modifications to the FCN:
+      <ol>
+        <li>Specify for the first layer (a conv2d nn) that the number of in channels is 1 (greyscale), kept everything else the same. </li>
+        <li>Specify for the last layer (a conv2d nn) that the number of out channels is 68 (one for each keypoint) and changed the kernel size to 1, kept everything else the same. </li>
+      </ol>
+     I also updated the training parameters: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one. As a final note, the epochs were taking so long (30 minutes each with the 6000 train images) that I was only able to train my model for 4 epochs. However, that did not hinder the model as you will see below.
     </p>
 
+    <p>To provide more context for the FCN ResNET50 network, I include images of the FCN architecture and the parameters of the ResNET50 architecture below. The first image is from <a href="https://discuss.pytorch.org/t/fully-understand-fcn/57951">here</a> and the second from <a href="https://pytorch.org/hub/pytorch_vision_resnet/">here</a></p>
+    <table>
+      <tr>
+        <td> <img src="fcn.png" width="400" height="300"> </td>
+        <td> <img src="resnet50.png" width="400" height="300"> </td>
+      </tr>
+    </table>
+
     <h3>Results</h3>
-    <p>The heatmaps laid on top of each other. These images are not that good: I wasn't able to make them better. </p>
+    <h4>The heatmaps laid on top of each other. These images are not that good: I wasn't able to make them better. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part4/Samples/sample1.png" width="400" height="300"> </td>
@@ -290,10 +310,10 @@
         </tr>
     </table>
 
-    <p>The Loss curves</p>
+    <h4>The Loss curves</h4>
     <img src="face_keypoints/part4/loss.png" width="600" height="600">
 
-    <p>From the few select sample images I saw, the model did extremely well across all of them and there were not any situations of really poor performance </p>
+    <h4>From the few select sample images I saw, the model did extremely well across all of them and there were not any situations of really poor performance </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part4/Results/good1.png" width="300" height="225"> </td>
@@ -309,7 +329,7 @@
         </tr>
     </table>
 
-    <p>Three pictures of myself which the model tries to classify. This model performs noticeably better. </p>
+    <h4>Three pictures of myself which the model tries to classify. This model performs noticeably better. </h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part4/Results/mine1.png" width="300" height="225"> </td>
@@ -318,7 +338,7 @@
         </tr>
     </table>
 
-    <p>Some images from the test set.</p>
+    <h4>Some images from the test set.</h4>
     <table>
         <tr>
           <td> <img src="face_keypoints/part4/Results/test1.png" width="300" height="225"> </td>
@@ -359,7 +379,7 @@
     </p>
 
     <h3>Results</h3>
-    <p>This is an example of the input images.</p>
+    <h4>This is an example of the input images.</h4>
     <table>
         <tr>
             <td> 17s </td>
@@ -375,10 +395,10 @@
         </tr>
     </table>
 
-    <p>This is an example of the g curves</p>
+    <h4>This is an example of the g curves</h4>
     <img src="hdr/results/g_curves_arch.png" width="600" height="600">
 
-    <p>These are the radiance maps for the Arch pictures.</p>
+    <h4>These are the radiance maps for the Arch pictures.</h4>
     <table>
         <tr>
             <td> Mean of Channels </td>
@@ -467,10 +487,9 @@
 
 <div class="HomeContainer">
   <h2>What I enjoyed and learned</h2>
-  <p> I enjoyed the Face Keypoint Detection with Neural Networks. In fact, I plan on using this for the face morph project (<a href="/proj3/index.html">project 3</a>) to more seamlessly add more picture of people. I will need to train the models for longer, however, to ensure that I obtain good features for all faces. (I know this is a B&W but I did not have the time to build the pipeline and train the models sufficiently). 
+  <p> I enjoyed the Face Keypoint Detection with Neural Networks. In fact, I plan on using this for the face morph project (<a href="/proj3/index.html">project 3</a>) to more seamlessly add more picture of people. I will need to train the models for longer, however, to ensure that I obtain good features for all faces. (I know this is a B&W but I did not have the time to build the pipeline and train the models sufficiently). </p>
     
-  I learned that neural nets can be tricky in terms of the data processing that is required to make a good neural net. I spent most of this project writing code for and looking up how to do data processing.
-</p>
+  <p>I learned that neural nets can be tricky in terms of the data processing that is required to make a good neural net. I spent most of this project writing code for and looking up how to do data processing. </p>
 </div>
 
 </body>

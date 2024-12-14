@@ -681,3 +681,7 @@ img.nonboxed {
     padding: 5px;
     margin-bottom: 20px;
 }
+
+a:link {
+    color: lightblue;
+}
