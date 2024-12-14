@@ -276,37 +276,66 @@
 <div class="HomeContainer">
     <h2>Part 4: Larger Dataset with HeatMaps</h2>
     <h3>Approach</h3>
-    <p>This part uses the exact same data as the previous one. However, instead of training on the keypoints, we will train the model on heatmaps modelled by 2D Gaussians which essentially represent a probability distribution for the location of a keypoint. I am using \(\sigma = 5.0\) to generate the kernels. This is achieved by simply making Gaussian kernels centered at the 68 keypoints and changing the custom dataset such that it calculates the heatmaps for the keypoints and returns the heatmaps as the labels. 
+    <p>This part uses the exact same data as the previous one. However, instead of training on the keypoints, we will train the model on heatmaps modelled by 2D Gaussians which essentially represent a probability distribution for the location of a keypoint. Specifically, I made a grid represeting the pixel coordinates of the image and then evaluated a Gaussian kernel on the grid centered at the keypoint and using \(\sigma = 5.0\) to generate the kernels. In summary, simply make Gaussian kernels centered at the 68 keypoints and turn them into the channels. This also involved changing the custom dataset such that it calculates the heatmaps for the keypoints and returns the heatmaps as the labels. 
     
-    Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/stable/models/generated/torchvision.models.segmentation.fcn_resnet50.html#torchvision.models.segmentation.fcn_resnet50">here</a> to make our predictions. This is because its output images are of the same dimensions as the inputs (the heatmaps). Also, I could not load in Pytorch's UNet into Colab as it caused an out of RAM error. We specify that the number of in channels is 1 (greyscale) and 68 out channels with 50176 features (224 times 224). Consequently, the training parameters also change: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one. Moreover, the epochs were taking so long that I was only able to train my model for 4 epochs which will evidently lead to suboptimal results, as you may see below.
+    Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/stable/models/generated/torchvision.models.segmentation.fcn_resnet50.html#torchvision.models.segmentation.fcn_resnet50">here</a> to make our predictions. This is because its output images are of the same dimensions as the inputs (the heatmaps). Also, I could not load in Pytorch's UNet into Colab as it caused an out of RAM error. We specify that the number of in channels is 1 (greyscale) and 68 out channels with 50176 features (224 times 224). Consequently, the training parameters also change: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one. Moreover, the epochs were taking so long (30 minutes each with 6000 train images) that I was only able to train my model for 4 epochs. However, that did not hinder the model.
     </p>
 
     <h3>Results</h3>
-    <p>The Loss curves</p>
-    <!-- <img src="face_keypoints/part4/loss.png" width="600" height="600"> -->
+    <p>The heatmaps laid on top of each other. These images are not that good: I wasn't able to make them better. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part4/Samples/sample1.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Samples/sample2.png" width="300" height="225"> </td>
+        </tr>
+    </table>
 
-    <p>Some well classified points from the test set. </p>
-    <!-- <table>
+    <p>The Loss curves</p>
+    <img src="face_keypoints/part4/loss.png" width="600" height="600">
+
+    <p>From the few select sample images I saw, the model did extremely well across all of them and there were not any situations of really poor performance </p>
+    <table>
         <tr>
           <td> <img src="face_keypoints/part4/Results/good1.png" width="300" height="225"> </td>
           <td> <img src="face_keypoints/part4/Results/good2.png" width="300" height="225"> </td>
           <td> <img src="face_keypoints/part4/Results/good3.png" width="300" height="225"> </td>
-          <td> <img src="face_keypoints/part4/Results/good4.png" width="300" height="225"> </td>
         </tr>
-    </table> -->
-
-    <p>Some poorly classified points from the test set. </p>
-    <!-- <table>
+    </table>
+    <table>
         <tr>
-          <td> <img src="face_keypoints/part4/Results/bad1.png" width="300" height="225"> </td>
-          <td> <img src="face_keypoints/part4/Results/bad2.png" width="300" height="225"> </td>
-          <td> <img src="face_keypoints/part4/Results/bad3.png" width="300" height="225"> </td>
-          <td> <img src="face_keypoints/part4/Results/bad4.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/good4.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/good5.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/good6.png" width="300" height="225"> </td>
         </tr>
-    </table> -->
+    </table>
 
-    <h3>Comparing Good vs Bad samples</h3>
-    <p> </p>
+    <p>Three pictures of myself which the model tries to classify. This model performs noticeably better. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part4/Results/mine1.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/mine2.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/mine3.png" width="300" height="225"> </td>
+        </tr>
+    </table>
+
+    <p>Some images from the test set.</p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part4/Results/test1.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/test2.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/test3.png" width="300" height="225"> </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part4/Results/test4.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/test5.png" width="300" height="225"> </td>
+          <td> <img src="face_keypoints/part4/Results/test6.png" width="300" height="225"> </td>
+        </tr>
+    </table>
+
+    <h3>Analysis</h3>
+    <p> It seems that formulating this problem with heatmaps and as a type of classification problem on a pixel-by-pixel basis led to better results in general. However, the computational cost is considerable compared to the previous model. </p>
 </div>
 
 <!-- Split Here -->
@@ -433,7 +462,7 @@
 <h1>Final Thoughts</h1>
 <div class="HomeContainer">
   <h2>Bells and Whistles</h2>
-  <h3 style="text-align: center;"> As part of the requirements for this project, we had to implement a B&W for a project. I chose to do the B&W for the HDR project by adding a collection of pictures of my own. </h3>
+  <h3 style="text-align: center;"> As part of the requirements for this project, we had to implement a B&W for a project. I chose to do the B&W for the HDR project by adding a collection of pictures of my own. (The pictures with the computer are my own.) </h3>
 </div>
 
 <div class="HomeContainer">
