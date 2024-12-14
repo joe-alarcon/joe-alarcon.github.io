@@ -278,7 +278,7 @@
     <h3>Approach</h3>
     <p>This part uses the exact same data as the previous one. However, instead of training on the keypoints, we will train the model on heatmaps modelled by 2D Gaussians which essentially represent a probability distribution for the location of a keypoint. I am using \(\sigma = 5.0\) to generate the kernels. This is achieved by simply making Gaussian kernels centered at the 68 keypoints and changing the custom dataset such that it calculates the heatmaps for the keypoints and returns the heatmaps as the labels. 
     
-    Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/stable/models/generated/torchvision.models.segmentation.fcn_resnet50.html#torchvision.models.segmentation.fcn_resnet50">here</a> to make our predictions. This is because its output images are of the same dimensions as the inputs (the heatmaps). Also, I could not load in Pytorch's UNet into Colab as it caused an out of RAM error. We specify that the number of in channels is 1 (greyscale) and 68 out channels with 50176 features (224 times 224). Consequently, the training parameters also change: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one.
+    Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/stable/models/generated/torchvision.models.segmentation.fcn_resnet50.html#torchvision.models.segmentation.fcn_resnet50">here</a> to make our predictions. This is because its output images are of the same dimensions as the inputs (the heatmaps). Also, I could not load in Pytorch's UNet into Colab as it caused an out of RAM error. We specify that the number of in channels is 1 (greyscale) and 68 out channels with 50176 features (224 times 224). Consequently, the training parameters also change: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one. Moreover, the epochs were taking so long that I was only able to train my model for 4 epochs which will evidently lead to suboptimal results, as you may see below.
     </p>
 
     <h3>Results</h3>
@@ -421,7 +421,27 @@
             <td> <img src="hdr/results/window/global_simple.png" width="300" height="225"> </td>
             <td> <img src="hdr/results/window/durand.png" width="300" height="225"> </td>
           </tr>
+          <tr>
+            <td> <img src="hdr/results/computer/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/computer/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/computer/durand.png" width="300" height="225"> </td>
+          </tr>
     </table>
+</div>
+
+
+<h1>Final Thoughts</h1>
+<div class="HomeContainer">
+  <h2>Bells and Whistles</h2>
+  <h3 style="text-align: center;"> As part of the requirements for this project, we had to implement a B&W for a project. I chose to do the B&W for the HDR project by adding a collection of pictures of my own. </h3>
+</div>
+
+<div class="HomeContainer">
+  <h2>What I enjoyed and learned</h2>
+  <p> I enjoyed the Face Keypoint Detection with Neural Networks. In fact, I plan on using this for the face morph project (<a href="/proj3/index.html">project 3</a>) to more seamlessly add more picture of people. I will need to train the models for longer, however, to ensure that I obtain good features for all faces. (I know this is a B&W but I did not have the time to build the pipeline and train the models sufficiently). 
+    
+  I learned that neural nets can be tricky in terms of the data processing that is required to make a good neural net. I spent most of this project writing code for and looking up how to do data processing.
+</p>
 </div>
 
 </body>
