@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CS 180 Final Project</title>
+    <link rel="stylesheet" type="text/css" href="/static/styling.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<header>
+  <div id="header">
+    <table id="TableHeader">
+      <tr>
+        <td>
+            <span>
+                <button onclick="location.href = '/index.html';" class="header"> Home </button>
+            </span>
+          </td>
+        <td>
+          <span>
+            <button onclick="location.href = '/proj1/index.html';" class="header"> Project 1 </button>
+          </span>
+        </td>
+        <td>
+          <span>
+            <button onclick="location.href = '/proj2/index.html';" class="header"> Project 2 </button>
+          </span>
+        </td>
+        <td>
+          <span>
+            <button onclick="location.href = '/proj3/index.html';" class="header"> Project 3 </button>
+          </span>
+        </td>
+        <td>
+          <span>
+            <button onclick="location.href = '/proj4/index.html';" class="header"> Project 4 </button>
+          </span>
+        </td>
+        <td>
+          <span>
+            <button onclick="location.href = '/proj5/index.html';" class="header"> Project 5 </button>
+          </span>
+        </td>
+        <td>
+            <span>
+              <button onclick="location.href = '/projf/index.html';" class="header"> Final Project </button>
+            </span>
+          </td>
+      </tr>
+    </table>
+</div>
+</header>
+
+<body>
+
+<h1>Final Project 5</h1>
+<div class="HomeContainer">
+  <h2>Overview</h2>
+  <h3 style="text-align: center;"> This Final Project is divided into two separate projects. I chose to do the Facial Keypoint Detection with Neural Nets project and the High Dynamic Range Imaging Project. </h3>
+</div>
+
+<h1>Facial Keypoint Detection with Neural Nets</h1>
+<div class="HomeContainer">
+    <h2>Overview</h2>
+    <h3 style="text-align: center;"> In this project, we seek to predict where a set of facial keypoints are on pictures of people's faces using Neural Networks, particularly Convolutional Neural Networks. </h3>
+</div>
+
+<div class="HomeContainer">
+    <h2>Part 1: Nosetip Detection</h2>
+    <h3>Approach</h3>
+    <p>The first part of this section is making the custom dataset of the images and the labels. Using the provided starter code, read in all of the images and the corresponding labels. The images are transformed in the following way:
+        <ol>
+            <li>Greyscale the image. </li>
+            <li>Normalize the image such that pixel values are within the range [-0.5,0.5]. </li>
+            <li>Resize the image to be of size (60,80). (width,height) </li>
+        </ol>
+
+    After this data augmentation and after a lot of testing with different parameters, I built the CNN which has the following layers:
+    <ol>
+        <li>Conv2d: in_channel: 1, out_channel: 12, kernel_size: 3 </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Conv2d: in_channel: 12, out_channel: 16, kernel_size: 3 </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Conv2d: in_channel: 16, out_channel: 16, kernel_size: 5  </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Flatten</li>
+        <li>FCL: in_size: 448, out_size: 200 </li>
+        <li>FCL: in_size: 200, out_size: 2 </li>
+    </ol>
+    Note that after every convolutional and linear layer, there is a ReLU non-linear activation, with the exception of the last linear layer. I trained the CNN with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 29 epochs.
+    </p>
+
+    <h3>Results</h3>
+    <p>Some samples from the dataset with the nosetip point. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part1/Samples/sample1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Samples/sample2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Samples/sample3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Samples/sample4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>The Loss curves</p>
+    <img src="face_keypoints/part1/loss.png" width="400" height="400">
+
+    <p>Some well classified points from the validation set. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part1/Results/good1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Results/good2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Results/good3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Results/good4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>Some poorly classified points from the validation set. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part1/Results/bad1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Results/bad2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Results/bad3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part1/Results/bad4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <h3>Comparing Good vs Bad samples</h3>
+    <p>It seems that the model learns to classify a certain set of pictures well, namely, ones where the subject is a male looking straight on or slightly to the side. It does poorly on female subjects, when the person is looking too much to the side, or when there is something different about the picture like arms/hands or different facial expression. (Note, there are only 7 females in this dataset of 40 people.) </p>
+</div>
+
+<div class="HomeContainer">
+    <h2>Part 2: All keypoints Detection</h2>
+    <h3>Approach</h3>
+    <p>The first part of this section is making the custom dataset of the images and the labels. Using the provided starter code again, read in all of the images and the corresponding labels. The images are transformed in the following way:
+        <ol>
+            <li>Greyscale the image. </li>
+            <li>Resize the image to be of size (240,180). (width,height) </li>
+            <li>A random Affine transformation: 15 degree rotation and 5% horizontal/vertical translation. </li>
+            <li>A random color jitter transformation: 5% brightness and 10% contrast </li>
+            <li>Normalize the image such that pixel values are within the range [-0.5,0.5]. </li>
+        </ol>
+    The labels must also be subject to the affine transformation. This can be implemented with a custom torchvision transformation that implements the rotation first and then the translation. Make sure to reseed torch.manual_seed inside of the custom dataset's __getitem__ method. This is important because, if done correctly, the same random transformation will be applied to both the image and the labels. 
+
+    After this data augmentation and after a lot of testing with different parameters, I built the CNN which has the following layers:
+    <ol>
+        <li>Conv2d: in_channel: 1, out_channel: 8, kernel_size: 7 </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Conv2d: in_channel: 8, out_channel: 14, kernel_size: 5 </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Conv2d: in_channel: 14, out_channel: 20, kernel_size: 3 </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Conv2d: in_channel: 20, out_channel: 26, kernel_size: 5 </li>
+        <li>MaxPool: kernel_size: 2, stride: 2 </li>
+        <li>Conv2d: in_channel: 26, out_channel: 32, kernel_size: 3 </li>
+        <li>Flatten</li>
+        <li>FCL: in_size: 1440, out_size: 512 </li>
+        <li>FCL: in_size: 512, out_size: 256 </li>
+        <li>FCL: in_size: 256, out_size: 116 </li>
+    </ol>
+    Note that after every convolutional and linear layer, there is a ReLU non-linear activation, with the exception of the last linear layer. I trained the CNN with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 50 epochs.
+    </p>
+
+    <h3>Results</h3>
+    <p>Some samples from the dataset with the nosetip point. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part2/Samples/sample1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Samples/sample2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Samples/sample3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Samples/sample4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>The Loss curves</p>
+    <img src="face_keypoints/part2/loss.png" width="400" height="400">
+
+    <p>Some learned Convolution Kernels</p>
+    <img src="face_keypoints/part2/kernels.png" width="500" height="500">
+
+    <p>Some well classified points from the validation set. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part2/Results/good1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Results/good2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Results/good3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Results/good4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>Some poorly classified points from the validation set. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part2/Results/bad1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Results/bad2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Results/bad3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part2/Results/bad4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <h3>Comparing Good vs Bad samples</h3>
+    <p>It seems that the model learns to classify a certain set of pictures well, namely, ones where the subject is a male looking straight on or slightly to the side. It does poorly on female subjects, when the person is looking too much to the side, or when there is something different about the picture like arms/hands or different facial expression. (Note, there are only 7 females in this dataset of 40 people.) </p>
+</div>
+
+<div class="HomeContainer">
+    <h2>Part 3: Larger Dataset</h2>
+    <h3>Approach</h3>
+    <p>The first part of this section is making the custom dataset of the images and the labels. This is a different datset which is much larger (6666 images) and which has a different structure. The keypoints are stored as pixel coordinates within the bounding box defined for the face in the image. Therefore, to get the pixel ratios, use the information encoded inside the bounding box. Using the provided starter code again, read in all of the images, the bounding boxes and the corresponding keypoints/labels. The images are transformed in the following way:
+        <ol>
+            <li>Crop the image using PIL.crop() and the information inside the bounding boxes.</li>
+            <li>Greyscale the image. </li>
+            <li>Resize the image to be of size (224,224). (width,height) </li>
+            <li>A random Affine transformation: 15 degree rotation and 5% horizontal/vertical translation. </li>
+            <li>A random color jitter transformation: 5% brightness and 10% contrast </li>
+            <li>Normalize the image such that pixel values are within the range [-0.5,0.5]. </li>
+        </ol>
+    Modify the previous part's custom keypoint transform such that it first calculates the ratios of the keypoints' coordinates. Then, proceed in the same manner. 
+
+    After this data augmentation, we use PyTorch's built-in ResNET18 architecture to build our model. It is necessary to reset the first layer (a conv2d layer) so that it accepts input images with 1 channel and the last layer (a linear layer) so that it returns 136 outputs (68 pairs of (x,y) coordinates). I trained the ResNET18 with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 12 epochs.
+    </p>
+
+    <h3>Results</h3>
+    <p>Some samples from the dataset with the nosetip point. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part3/Samples/sample1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Samples/sample2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Samples/sample3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Samples/sample4.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>The Loss curves</p>
+    <img src="face_keypoints/part3/loss.png" width="400" height="400">
+
+    <p>Some well classified points from the validation set. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part3/Results/good1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/good2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/good3.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>Some poorly classified points from the validation set. </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part3/Results/bad1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/bad2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/bad3.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>Three pictures of myself which the model tries to classify. Unfortunately, it doesn't do quite a good job, most likely because of the glasses (not many people in the training data with glasses). </p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part3/Results/mine1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/mine2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/mine3.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>Some images from the test set.</p>
+    <table>
+        <tr>
+          <td> <img src="face_keypoints/part3/Results/test1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/test2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part3/Results/test3.png" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <h3>Analysis</h3>
+    <p>Based on the loss graphs and some of the results, training with 12 epochs was not enough to get a good enough model even when using the pre-trained version of ResNET18. As before, the model has issues when the face is not completely visible or there are other things in the image that might “distract" from the main focus or are not very common in the training dataset. </p>
+</div>
+
+<div class="HomeContainer">
+    <h2>Part 4: Larger Dataset with HeatMaps</h2>
+    <h3>Approach</h3>
+    <p>This part uses the exact same data as the previous one. However, instead of training on the keypoints, we will train the model on heatmaps modelled by 2D Gaussians which essentially represent a probability distribution for the location of a keypoint. I am using \(\sigma = 5.0\) to generate the kernels. This is achieved by simply making Gaussian kernels centered at the 68 keypoints and changing the custom dataset such that it calculates the heatmaps for the keypoints and returns the heatmaps as the labels. 
+    
+    Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/stable/models/generated/torchvision.models.segmentation.fcn_resnet50.html#torchvision.models.segmentation.fcn_resnet50">here</a> to make our predictions. This is because its output images are of the same dimensions as the inputs (the heatmaps). Also, I could not load in Pytorch's UNet into Colab as it caused an out of RAM error. We specify that the number of in channels is 1 (greyscale) and 68 out channels with 50176 features (224 times 224). Consequently, the training parameters also change: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one.
+    </p>
+
+    <h3>Results</h3>
+    <p>The Loss curves</p>
+    <!-- <img src="face_keypoints/part4/loss.png" width="400" height="400"> -->
+
+    <p>Some well classified points from the test set. </p>
+    <!-- <table>
+        <tr>
+          <td> <img src="face_keypoints/part4/Results/good1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part4/Results/good2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part4/Results/good3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part4/Results/good4.png" width="200" height="150"> </td>
+        </tr>
+    </table> -->
+
+    <p>Some poorly classified points from the test set. </p>
+    <!-- <table>
+        <tr>
+          <td> <img src="face_keypoints/part4/Results/bad1.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part4/Results/bad2.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part4/Results/bad3.png" width="200" height="150"> </td>
+          <td> <img src="face_keypoints/part4/Results/bad4.png" width="200" height="150"> </td>
+        </tr>
+    </table> -->
+
+    <h3>Comparing Good vs Bad samples</h3>
+    <p> </p>
+</div>
+
+
+
+<h1>High Dynamic Range Imaging</h1>
+<div class="HomeContainer">
+    <h2>Overview</h2>
+    <h3 style="text-align: center;"> Cameras are unable to capture the whole range of light in real-world scenes. Even the best photographs are partially under or over-exposed. So, in this project, we seek to capture the full dynamic range of commonly encountered real-world scenes by using multiple images of the same scene with different exposures. </h3>
+</div>
+
+<div class="HomeContainer">
+    <h2>Part 1: Getting the Radiance Mapping</h2>
+    <h3>Approach</h3>
+    <p>There are two main formulas which capture the relaitonship between the radiance and the pixel value in the photo. \( Z_{ij} = f(E_i \Delta t_j) \) where \(Z_{ij}\) is the pixel value between 0 and 255 for pixel i in image j, \(E_i\) is the radiance for pixel i (note that the radiance is the same across the different images), and \(\Delta t_j\) is the exposure duration for image j (which is the same for all the pixels in the same image). The goal is to determine \(E_i\) from the known \(Z_{ij}\) and \(\Delta t_j\). However, the function relating these variables is also unknown. The problem is reformulated as \( \ln E_i = g(Z_{ij}) - \ln \Delta t_j \) where \(g = \ln f^{-1} \) is the unknown function but is assumed to be smooth and monotonic. This naturally leads to a Least-Squares formulation in an attempt to estimate \(\ln E_i\) but also to recover the function \(g\) with a subsample of the image points:
+        \[ O = \sum_{i=1}^N \sum_{j=1}^P \{ w(Z_{ij})[g(Z_{ij}) - \ln E_i - \ln \Delta t_j] \}^2 + \lambda \sum_{z=Z_{min}+1}^{Z_{Max}-1} [w(z)g"(z)]^2 \]
+    Thus, solving this optimization problem leads to finding \(g(z)\). In practice, we only care about \(g(z)\) because we are going to use that to solve for the \(\ln E_i\) for all of the pixels and not just the subsample. Thus, to recover the radiances for each color channel while incorporating the weights, use the formula:
+        \[ \ln E_i = \frac{\sum_{j=1}^P w(Z_{ij})(g(Z_{ij}) - \Delta t_j)}{\sum_{j=1}^P w(Z_{ij})} \]
+    Then combine all the three channels together. This leads to the HDR Map as seen below.
+
+    <a href="https://www.pauldebevec.com/Research/HDR/debevec-siggraph97.pdf">Here</a> is the original paper which discusses this entire setup. And <a href="https://cs.brown.edu/courses/cs129/2012/asgn/proj5/">here</a> is the project specification from Brown.
+    </p>
+
+    <h3>Results</h3>
+    <p>This is an example of the input images.</p>
+    <table>
+        <tr>
+            <td> 17s </td>
+            <td> 3s </td>
+            <td> 1/4s </td>
+            <td> 1/25s </td>
+          </tr>
+        <tr>
+          <td> <img src="hdr/arch/17_1.jpg" width="200" height="150"> </td>
+          <td> <img src="hdr/arch/3_1.jpg" width="200" height="150"> </td>
+          <td> <img src="hdr/arch/1_4.jpg" width="200" height="150"> </td>
+          <td> <img src="hdr/arch/1_25.jpg" width="200" height="150"> </td>
+        </tr>
+    </table>
+
+    <p>This is an example of the g curves</p>
+    <img src="hdr/results/g_curves_arch.png" width="400" height="400">
+
+    <p>These are the radiance maps for the Arch pictures.</p>
+    <table>
+        <tr>
+            <td> Mean of Channels </td>
+            <td> Per Channel </td>
+        </tr>
+        <tr>
+          <td> <img src="hdr/results/arch/hdr_radiance_map_mean.png" width="300" height="225"> </td>
+          <td> <img src="hdr/results/arch/hdr_radiance_map.png" width="300" height="225"> </td>
+        </tr>
+    </table>
+</div>
+
+<div class="HomeContainer">
+    <h2>Part 2: Radiance Map to Image</h2>
+    <h3>Approach</h3>
+    <p> Now that we have the radiance maps, we transform them to get back real images with a high-dynamic range. There are different transforms that can achieve this but we focused on three for this project. 
+        <ol>
+            <li>The global scale is essentially a minmax normalizer; substract the minimum along each channel and normalize to get a range from 0 to 1.</li>
+            <li>The global simple first performs some transformation on the radiance map and then applies the global scale. The applied transformation can be \(\log(L), \sqrt{L}, L/(L+1)\). In my implementation, I use \(L/(L+1)\).</li>
+            <li>Finally, the Durand transformation. The details can be found in the project spec <a href="https://cs.brown.edu/courses/cs129/2012/asgn/proj5/">here</a>. Essentially, it extracts the darker and lighter regions of images, applies a bilateral filter, and puts them back together to get a much more dynamic scene.</li>
+        </ol>
+        I present all of the dataset images using the three transformations for comparison.
+    </p>
+
+    <h3>Results</h3>
+    <table>
+        <tr>
+            <th>Global Scale</th>
+            <th>Global Simple</th>
+            <th>Durand</th>
+        </tr>
+        <tr>
+          <td> <img src="hdr/results/arch/global_scale.png" width="300" height="225"> </td>
+          <td> <img src="hdr/results/arch/global_simple.png" width="300" height="225"> </td>
+          <td> <img src="hdr/results/arch/durand.png" width="300" height="225"> </td>
+        </tr>
+        <tr>
+            <td> <img src="hdr/results/bonsai/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/bonsai/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/bonsai/durand.png" width="300" height="225"> </td>
+          </tr>
+          <tr>
+            <td> <img src="hdr/results/chapel/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/chapel/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/chapel/durand.png" width="300" height="225"> </td>
+          </tr>
+          <tr>
+            <td> <img src="hdr/results/garage/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/garage/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/garage/durand.png" width="300" height="225"> </td>
+          </tr>
+          <tr>
+            <td> <img src="hdr/results/garden/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/garden/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/garden/durand.png" width="300" height="225"> </td>
+          </tr>
+          <tr>
+            <td> <img src="hdr/results/house/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/house/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/house/durand.png" width="300" height="225"> </td>
+          </tr>
+          <tr>
+            <td> <img src="hdr/results/mug/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/mug/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/mug/durand.png" width="300" height="225"> </td>
+          </tr>
+          <tr>
+            <td> <img src="hdr/results/window/global_scale.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/window/global_simple.png" width="300" height="225"> </td>
+            <td> <img src="hdr/results/window/durand.png" width="300" height="225"> </td>
+          </tr>
+    </table>
+</div>
+
+</body>
+
+</html>
