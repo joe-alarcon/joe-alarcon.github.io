@@ -217,12 +217,12 @@
     Modify the previous part's custom keypoint transform such that it first calculates the ratios of the keypoints' coordinates. Then, proceed in the same manner. </p>
 
     <p>
-    After this data augmentation, we use PyTorch's built-in ResNET18 architecture to build our model which can be found <a href="https://pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html">here</a>. It is necessary to modify this architecture so that it accepts our data and returns the number of features we want it to. 
+    After this data augmentation, we use PyTorch's built-in ResNET18 architecture to build our model which can be found <a href="https://pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html" target="_blank">here</a>. It is necessary to modify this architecture so that it accepts our data and returns the number of features we want it to. 
     <ol>
       <li>Reset the first layer (a conv2d layer) so that it accepts input images with 1 channel. Everything else is kept the same. </li>
       <li>Reset the last layer (a linear layer) so that it returns 136 outputs (68 pairs of (x,y) coordinates). Everything else is kept the same. </li>
     </ol> 
-    I trained the pretrained ResNET18 with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 12 epochs. Below, you can find the architecture of PyTorch's ResNET18 taken from <a href="https://pytorch.org/hub/pytorch_vision_resnet/">here</a>:
+    I trained the pretrained ResNET18 with a learning rate of \( 10^{-3} \) using Adam's optimization, MSE loss, and with 12 epochs. Below, you can find the architecture of PyTorch's ResNET18 taken from <a href="https://pytorch.org/hub/pytorch_vision_resnet/" target="_blank">here</a>:
     </p>
     <img src="resnet18.png" width="400" height="300">
 
@@ -285,7 +285,7 @@
     <h3>Approach</h3>
     <p>This part uses the exact same data as the previous one. However, instead of training on the keypoints, we will train the model on heatmaps modelled by 2D Gaussians which essentially represent a probability distribution for the location of a keypoint. Specifically, I made a grid represeting the pixel coordinates of the image and then evaluated a Gaussian kernel on the grid centered at the keypoint and using \(\sigma = 5.0\) to generate the kernels. In summary, simply make Gaussian kernels centered at the 68 keypoints and turn them into the channels. This also involved changing the custom dataset such that it calculates the heatmaps for the keypoints and returns the heatmaps as the labels. </p>
     
-    <p>Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/main/models/generated/torchvision.models.segmentation.fcn_resnet50.html">here</a> to make our predictions. This is because its output are images of the same dimensions as the inputs, ie. the outputs are the heatmaps. Also, I did not use Pytorch's UNet because I could not load in into Colab as it caused an out of RAM error. I made the following modifications to the FCN:
+    <p>Moreover, for this part, we use PyTorch's Segmentation FCN (fully-convolutional netowrk) ResNET50 found <a href="https://pytorch.org/vision/main/models/generated/torchvision.models.segmentation.fcn_resnet50.html" target="_blank">here</a> to make our predictions. This is because its output are images of the same dimensions as the inputs, ie. the outputs are the heatmaps. Also, I did not use Pytorch's UNet because I could not load in into Colab as it caused an out of RAM error. I made the following modifications to the FCN:
       <ol>
         <li>Specify for the first layer (a conv2d nn) that the number of in channels is 1 (greyscale), kept everything else the same. </li>
         <li>Specify for the last layer (a conv2d nn) that the number of out channels is 68 (one for each keypoint) and changed the kernel size to 1, kept everything else the same. </li>
@@ -293,7 +293,7 @@
      I also updated the training parameters: learning rate is \(5 \times 10^{-4} \) with Adams optimization using Cross Entropy Loss. Besides these modifications, this part is very similar to the previous one. As a final note, the epochs were taking so long (30 minutes each with the 6000 train images) that I was only able to train my model for 4 epochs. However, that did not hinder the model as you will see below.
     </p>
 
-    <p>To provide more context for the FCN ResNET50 network, I include images of the FCN architecture and the parameters of the ResNET50 architecture below. The first image is from <a href="https://discuss.pytorch.org/t/fully-understand-fcn/57951">here</a> and the second from <a href="https://pytorch.org/hub/pytorch_vision_resnet/">here</a></p>
+    <p>To provide more context for the FCN ResNET50 network, I include images of the FCN architecture and the parameters of the ResNET50 architecture below. The first image is from <a href="https://discuss.pytorch.org/t/fully-understand-fcn/57951" target="_blank">here</a> and the second from <a href="https://pytorch.org/hub/pytorch_vision_resnet/" target="_blank">here</a></p>
     <table>
       <tr>
         <td> <img src="fcn.png" width="400" height="300"> </td>
@@ -375,7 +375,7 @@
         \[ \ln E_i = \frac{\sum_{j=1}^P w(Z_{ij})(g(Z_{ij}) - \Delta t_j)}{\sum_{j=1}^P w(Z_{ij})} \]
     Then combine all the three channels together. This leads to the HDR Map as seen below.
 
-    <a href="https://www.pauldebevec.com/Research/HDR/debevec-siggraph97.pdf">Here</a> is the original paper which discusses this entire setup. And <a href="https://cs.brown.edu/courses/cs129/2012/asgn/proj5/">here</a> is the project specification from Brown.
+    <a href="https://www.pauldebevec.com/Research/HDR/debevec-siggraph97.pdf" target="_blank">Here</a> is the original paper which discusses this entire setup. And <a href="https://cs.brown.edu/courses/cs129/2012/asgn/proj5/" target="_blank">here</a> is the project specification from Brown.
     </p>
 
     <h3>Results</h3>
@@ -418,7 +418,7 @@
         <ol>
             <li>The global scale is essentially a minmax normalizer; substract the minimum along each channel and normalize to get a range from 0 to 1.</li>
             <li>The global simple first performs some transformation on the radiance map and then applies the global scale. The applied transformation can be \(\log(L), \sqrt{L}, L/(L+1)\). In my implementation, I use \(L/(L+1)\).</li>
-            <li>Finally, the Durand transformation. The details can be found in the project spec <a href="https://cs.brown.edu/courses/cs129/2012/asgn/proj5/">here</a>. Essentially, it extracts the darker and lighter regions of images, applies a bilateral filter, and puts them back together to get a much more dynamic scene.</li>
+            <li>Finally, the Durand transformation. The details can be found in the project spec <a href="https://cs.brown.edu/courses/cs129/2012/asgn/proj5/" target="_blank">here</a>. Essentially, it extracts the darker and lighter regions of images, applies a bilateral filter, and puts them back together to get a much more dynamic scene.</li>
         </ol>
         I present all of the dataset images using the three transformations for comparison.
     </p>
@@ -487,7 +487,7 @@
 
 <div class="HomeContainer">
   <h2>What I enjoyed and learned</h2>
-  <p> I enjoyed the Face Keypoint Detection with Neural Networks. In fact, I plan on using this for the face morph project (<a href="/proj3/index.html">project 3</a>) to more seamlessly add more picture of people. I will need to train the models for longer, however, to ensure that I obtain good features for all faces. (I know this is a B&W but I did not have the time to build the pipeline and train the models sufficiently). </p>
+  <p> I enjoyed the Face Keypoint Detection with Neural Networks. In fact, I plan on using this for the face morph project (<a href="/proj3/index.html" target="_blank">project 3</a>) to more seamlessly add more picture of people. I will need to train the models for longer, however, to ensure that I obtain good features for all faces. (I know this is a B&W but I did not have the time to build the pipeline and train the models sufficiently). </p>
     
   <p>I learned that neural nets can be tricky in terms of the data processing that is required to make a good neural net. I spent most of this project writing code for and looking up how to do data processing. </p>
 </div>
