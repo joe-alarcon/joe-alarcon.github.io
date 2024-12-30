@@ -17,6 +17,9 @@ header {
     margin-bottom: 25px;
 }
 
+p {
+    font-size: large;
+}
 
 div.HomeContainer {
     background-color: rgb(53, 53, 53);
